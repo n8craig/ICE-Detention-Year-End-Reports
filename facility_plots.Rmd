@@ -13,24 +13,31 @@ output:
 
 Some initial work with learning to plot spatial data in R.
 
-```{r}
+```{r load libraries}
 library(sf)
 library(ggplot2)
+library(readxl)
+library(tidyverse)
 ```
-```{r}
+```{r read spatial data}
 facilities <- st_read("./map_data/Facilities_FY21.shp")
-```
-```{r}
-facilities_crop <- st_crop(facilities, xmin = -125, xmax = -64,
-                                      ymin = 16.5, ymax = 49.5)
-```
-
-```{r}
 states <- st_read("./map_data/cb_2018_us_state_500k.shp")
 ```
-```{r}
-states_crop <-  st_crop(states, xmin = -125, xmax = -64,
-                                      ymin = 16.5, ymax = 49.5)
+
+```{r read table data}
+df <- read_excel("data/FY21_detention-stats_0414.xlsx", 
+  sheet = "Facilities FY21 YTD", skip = 6) %>% 
+  mutate_at(.vars = 9:22, round) # Round averaged figures to intergers
+```
+
+
+
+```{r crop spatial features}
+# facilities_crop <- st_crop(facilities, xmin = -125, xmax = -64,
+#                                       ymin = 16.5, ymax = 49.5)
+# 
+# states_crop <-  st_crop(states, xmin = -125, xmax = -64,
+#                                       ymin = 16.5, ymax = 49.5)
 ```
 
 
@@ -38,12 +45,23 @@ states_crop <-  st_crop(states, xmin = -125, xmax = -64,
 main_map <- ggplot()+
   geom_sf(data=states)+
   geom_sf(data=facilities, aes(color = Guarante_1, size = Mandatory))+
-  ggtitle("ICE Detention Facilities")+
+  # ggtitle(,
+  #         )+
   coord_sf()
 
+# Zoom the map. Note this only seems to work when called separately.
 main_map +
-    coord_sf(xlim = c(-125,-64), ylim = c(16.5, 49.5), expand = FALSE)
+  coord_sf(xlim = c(-125,-64), ylim = c(16.5, 49.5), expand = FALSE)+
+  labs(
+    title = "ICE Detention Facilities",
+    subtitle = "Showing Mandatory Detention and Contractual Guaranteed Minimums",
+    caption = "Data source: https://www.ice.gov/detain/detention-management",
+    color ="Guaranteed\nMinimum",
+    size = "Mandatory\nDetention")
 ```
 
+```{r}
+
+```
 
 
