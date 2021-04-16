@@ -1,38 +1,153 @@
 ---
-title: "ICE Detention Facility Plots"
+title: "ICE Detention Data FY21"
 author: Nathan Craig
 date: 15 Apr 2021
 output:
+  html_notebook:
+    toc: true
   html_document:
     df_print: paged
     toc: true
     keep_md: yes
-  html_notebook:
-    toc: true
 ---
-
-Some initial work with learning to plot spatial data in R.
+# Introduction
+This document represents exploratory data analysis of ICE's Fiscal Year End Detention Reports. Currently, I am focusing on the FY21 dataset.
 
 ```{r load libraries}
 library(sf)
 library(ggplot2)
 library(readxl)
 library(tidyverse)
+library(summarytools)
+library(knitr)
+opts_chunk$set(results = 'asis',
+               comment = NA,
+               prompt = FALSE,
+               cache = FALSE)
 ```
+
+
+```{r}
+st_options(plain.ascii = FALSE,
+           footnote = NA,
+           subtitle.emphasis = FALSE)
+```
+
+
+
+## Load Data
+Data were downloaded from the [ICE Detention Management](https://www.ice.gov/detain/detention-management) webpage.
+
+
+Based on facility address, coordinates were established using [Geocodio](https://www.geocod.io/), appended to the spreadsheet and converted to a shapefile. This work was done using ArcGIS.
+
 ```{r read spatial data}
 facilities <- st_read("./map_data/Facilities_FY21.shp")
 states <- st_read("./map_data/cb_2018_us_state_500k.shp")
 ```
 
-```{r read table data}
-df <- read_excel("data/FY21_detention-stats_0414.xlsx", 
-  sheet = "Facilities FY21 YTD", skip = 6) %>% 
-  mutate_at(.vars = 9:22, round) # Round averaged figures to intergers
+```{r Rename Fields}
+facilities <- rename(facilities,
+       `Accuracy Score` = Accuracy_S,
+       `Accuracy Type` = Accuracy_T,
+       `Zip Geocoded` = Zip_Geocod,
+       `Type Detailed` = Type_Detai,
+       `Male/Female` = Male_Femal,
+       `Level A` = Level_A,
+       `Level B` = Level_B,
+       `Level C` = Level_C,
+       `Level D` = Level_D,
+       `Male Crim` = Male_Crim,
+       `Male Non Crim` = Male_Non_C,
+       `Female Crim` = Female_Cri,
+       `Female Non Crim` = Female_Non,
+       `ICE Threat Level 1` = ICE_Threat,
+       `ICE Threat Level 2` = ICE_Thre_1,
+       `ICE Threat Level 3` = ICE_Thre_2,
+       `ICE No Threat Level` = No_ICE_Thr,
+       `Mandatory Detention` = Mandatory,
+       `Guaranteed Minimum (character)` = Guaranteed,
+       `Guaranteed Minimum` = Guarante_1,
+       `Last Inspection Type` = Last_Inspe,
+       `Last Inspection Standard` = Last_Ins_1,
+       `Last Inspection Rating - Final` = Last_Ins_2,
+       `Last Inspection Date` = Last_Ins_3,
+       `Second to Last Inspection Type` = Second_to,
+       `Second to Last Inspection Standard` = Second_t_1,
+       `Second to Last Inspection Rating` = Second_t_2,
+       `Second to Last Insepction Date` = Second_t_3,
+  ) %>% 
+  relocate(`Guaranteed Minimum`, .after = `Guaranteed Minimum (character)`) %>% 
+  select(-`Guaranteed Minimum (character)`)
 ```
 
 
 
+
+
+
+
+
+# Summary Statistics
+
+Calculate detention totals.
+
+```{r}
+facilities <- facilities %>% 
+  mutate(`Total Detained`=
+           `Female Crim` +
+           `Female Non Crim` +
+           `Male Crim` +
+           `Male Non Crim`) %>% 
+  mutate(`Total Males Detained` =
+           `Male Crim` +
+           `Male Non Crim`) %>% 
+  mutate(`Total Females Detained` =
+           `Female Crim` +
+           `Female Non Crim`) %>% 
+  mutate(`Percent No Threat` =
+            (`ICE No Threat Level` /
+           `Total Detained`)*100) %>% 
+  relocate(c(`Total Females Detained`,
+             `Total Males Detained`,
+             `Total Detained`,
+             `Percent No Threat`), .after = `Guaranteed Minimum`)
+
+```
+
+
+```{r}
+facilities %>% 
+  select(c(-`Accuracy Score`, -Longitude, -Latitude, -Zip, -`Zip Geocoded`)) %>% 
+  descr(transpose = TRUE, stats = c("mean", "sd", "min", "med", "max"), headings = FALSE)
+```
+
+
+## Guaranteed Minimums
+Of the 142 facilities listed in the FY21 ICE Detention Year End Report 35% (n = 50) have Guaranteed Minimums as part of their contracts. The table below lists those facilities in descending order based on the Guaranteed Minimum number of beds stipulated in the contract.
+
+```{r Guaranteed Minimums}
+facilities %>% 
+  as_tibble() %>% 
+  select(c(Name, `Guaranteed Minimum`, `Total Detained`, `Mandatory Detention`, `Percent No Threat`)) %>% 
+  filter(`Guaranteed Minimum` >0) %>% 
+  arrange(desc(`Guaranteed Minimum`))
+```
+
+## Estimated number of empty beds
+```{r}
+facilities %>% 
+  as_tibble() %>% 
+  select(c(Name, `Guaranteed Minimum`, `Total Detained`, `Percent No Threat`)) %>% 
+  filter(`Guaranteed Minimum` >0) %>% 
+  mutate(`Estimated Empty Beds` = `Guaranteed Minimum` - `Total Detained`) %>% 
+  select(c(Name, `Estimated Empty Beds`)) %>% 
+  arrange(desc(`Estimated Empty Beds`))
+```
+
 ```{r crop spatial features}
+# Not currently using, but a working example is provided.
+
 # facilities_crop <- st_crop(facilities, xmin = -125, xmax = -64,
 #                                       ymin = 16.5, ymax = 49.5)
 # 
@@ -41,10 +156,10 @@ df <- read_excel("data/FY21_detention-stats_0414.xlsx",
 ```
 
 
-```{r}
+```{r facility map with mandatory detention and guaranteed minimums}
 main_map <- ggplot()+
   geom_sf(data=states)+
-  geom_sf(data=facilities, aes(color = Guarante_1, size = Mandatory))+
+  geom_sf(data=facilities, aes(color = `Guaranteed Minimum`, size = `Mandatory Detention`))+
   # ggtitle(,
   #         )+
   coord_sf()
@@ -60,8 +175,33 @@ main_map +
     size = "Mandatory\nDetention")
 ```
 
-```{r}
+# Not Used
 
+```{r read table data, include=FALSE}
+df <- read_excel("data/FY21_detention-stats_0414.xlsx", 
+  sheet = "Facilities FY21 YTD", skip = 6) %>% 
+  mutate_at(.vars = 9:22, round) # Round averaged figures to intergers
 ```
 
 
+```{r}
+df <- df %>% 
+  mutate(`Total Detained`=
+           `Female Crim` +
+           `Female Non-Crim` +
+           `Male Crim` +
+           `Male Non-Crim`) %>% 
+  mutate(`Total Males Detained` =
+           `Male Crim` +
+           `Male Non-Crim`) %>% 
+  mutate(`Total Females Detained` =
+           `Female Crim` +
+           `Female Non-Crim`) %>% 
+  mutate(`Percent No Threat` =
+            (`No ICE Threat Level` /
+           `Total Detained`)*100)
+```
+
+```{r}
+descr(df, transpose = TRUE, stats = c("mean", "sd", "min", "med", "max"), headings = FALSE)
+```
