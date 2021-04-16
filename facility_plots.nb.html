@@ -226,7 +226,7 @@ pre code {
 <li><a href="#summary-statistics">Summary Statistics</a>
 <ul>
 <li><a href="#guaranteed-minimums">Guaranteed Minimums</a></li>
-<li><a href="#estimated-number-of-empty-beds">Estimated number of empty beds</a></li>
+<li><a href="#estimated-number-of-ghost-beds">Estimated number of “Ghost Beds”</a></li>
 </ul></li>
 <li><a href="#not-used">Not Used</a></li>
 </ul>
@@ -279,7 +279,7 @@ opts_chunk$set(results = &#39;asis&#39;,
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmFjaWxpdGllcyA8LSByZW5hbWUoZmFjaWxpdGllcyxcbiAgICAgICBgQWNjdXJhY3kgU2NvcmVgID0gQWNjdXJhY3lfUyxcbiAgICAgICBgQWNjdXJhY3kgVHlwZWAgPSBBY2N1cmFjeV9ULFxuICAgICAgIGBaaXAgR2VvY29kZWRgID0gWmlwX0dlb2NvZCxcbiAgICAgICBgVHlwZSBEZXRhaWxlZGAgPSBUeXBlX0RldGFpLFxuICAgICAgIGBNYWxlL0ZlbWFsZWAgPSBNYWxlX0ZlbWFsLFxuICAgICAgIGBMZXZlbCBBYCA9IExldmVsX0EsXG4gICAgICAgYExldmVsIEJgID0gTGV2ZWxfQixcbiAgICAgICBgTGV2ZWwgQ2AgPSBMZXZlbF9DLFxuICAgICAgIGBMZXZlbCBEYCA9IExldmVsX0QsXG4gICAgICAgYE1hbGUgQ3JpbWAgPSBNYWxlX0NyaW0sXG4gICAgICAgYE1hbGUgTm9uIENyaW1gID0gTWFsZV9Ob25fQyxcbiAgICAgICBgRmVtYWxlIENyaW1gID0gRmVtYWxlX0NyaSxcbiAgICAgICBgRmVtYWxlIE5vbiBDcmltYCA9IEZlbWFsZV9Ob24sXG4gICAgICAgYElDRSBUaHJlYXQgTGV2ZWwgMWAgPSBJQ0VfVGhyZWF0LFxuICAgICAgIGBJQ0UgVGhyZWF0IExldmVsIDJgID0gSUNFX1RocmVfMSxcbiAgICAgICBgSUNFIFRocmVhdCBMZXZlbCAzYCA9IElDRV9UaHJlXzIsXG4gICAgICAgYElDRSBObyBUaHJlYXQgTGV2ZWxgID0gTm9fSUNFX1RocixcbiAgICAgICBgTWFuZGF0b3J5IERldGVudGlvbmAgPSBNYW5kYXRvcnksXG4gICAgICAgYEd1YXJhbnRlZWQgTWluaW11bSAoY2hhcmFjdGVyKWAgPSBHdWFyYW50ZWVkLFxuICAgICAgIGBHdWFyYW50ZWVkIE1pbmltdW1gID0gR3VhcmFudGVfMSxcbiAgICAgICBgTGFzdCBJbnNwZWN0aW9uIFR5cGVgID0gTGFzdF9JbnNwZSxcbiAgICAgICBgTGFzdCBJbnNwZWN0aW9uIFN0YW5kYXJkYCA9IExhc3RfSW5zXzEsXG4gICAgICAgYExhc3QgSW5zcGVjdGlvbiBSYXRpbmcgLSBGaW5hbGAgPSBMYXN0X0luc18yLFxuICAgICAgIGBMYXN0IEluc3BlY3Rpb24gRGF0ZWAgPSBMYXN0X0luc18zLFxuICAgICAgIGBTZWNvbmQgdG8gTGFzdCBJbnNwZWN0aW9uIFR5cGVgID0gU2Vjb25kX3RvLFxuICAgICAgIGBTZWNvbmQgdG8gTGFzdCBJbnNwZWN0aW9uIFN0YW5kYXJkYCA9IFNlY29uZF90XzEsXG4gICAgICAgYFNlY29uZCB0byBMYXN0IEluc3BlY3Rpb24gUmF0aW5nYCA9IFNlY29uZF90XzIsXG4gICAgICAgYFNlY29uZCB0byBMYXN0IEluc2VwY3Rpb24gRGF0ZWAgPSBTZWNvbmRfdF8zLFxuICApICU+JSBcbiAgcmVsb2NhdGUoYEd1YXJhbnRlZWQgTWluaW11bWAsIC5hZnRlciA9IGBHdWFyYW50ZWVkIE1pbmltdW0gKGNoYXJhY3RlcilgKSAlPiUgXG4gIHNlbGVjdCgtYEd1YXJhbnRlZWQgTWluaW11bSAoY2hhcmFjdGVyKWApXG5cblxuXG5cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmFjaWxpdGllcyA8LSByZW5hbWUoZmFjaWxpdGllcyxcbiAgICAgICBgQWNjdXJhY3kgU2NvcmVgID0gQWNjdXJhY3lfUyxcbiAgICAgICBgQWNjdXJhY3kgVHlwZWAgPSBBY2N1cmFjeV9ULFxuICAgICAgIGBaaXAgR2VvY29kZWRgID0gWmlwX0dlb2NvZCxcbiAgICAgICBgVHlwZSBEZXRhaWxlZGAgPSBUeXBlX0RldGFpLFxuICAgICAgIGBNYWxlL0ZlbWFsZWAgPSBNYWxlX0ZlbWFsLFxuICAgICAgIGBMZXZlbCBBYCA9IExldmVsX0EsXG4gICAgICAgYExldmVsIEJgID0gTGV2ZWxfQixcbiAgICAgICBgTGV2ZWwgQ2AgPSBMZXZlbF9DLFxuICAgICAgIGBMZXZlbCBEYCA9IExldmVsX0QsXG4gICAgICAgYE1hbGUgQ3JpbWAgPSBNYWxlX0NyaW0sXG4gICAgICAgYE1hbGUgTm9uIENyaW1gID0gTWFsZV9Ob25fQyxcbiAgICAgICBgRmVtYWxlIENyaW1gID0gRmVtYWxlX0NyaSxcbiAgICAgICBgRmVtYWxlIE5vbiBDcmltYCA9IEZlbWFsZV9Ob24sXG4gICAgICAgYElDRSBUaHJlYXQgTGV2ZWwgMWAgPSBJQ0VfVGhyZWF0LFxuICAgICAgIGBJQ0UgVGhyZWF0IExldmVsIDJgID0gSUNFX1RocmVfMSxcbiAgICAgICBgSUNFIFRocmVhdCBMZXZlbCAzYCA9IElDRV9UaHJlXzIsXG4gICAgICAgYElDRSBObyBUaHJlYXQgTGV2ZWxgID0gTm9fSUNFX1RocixcbiAgICAgICBgTWFuZGF0b3J5IERldGVudGlvbmAgPSBNYW5kYXRvcnksXG4gICAgICAgYEd1YXJhbnRlZWQgTWluaW11bSAoY2hhcmFjdGVyKWAgPSBHdWFyYW50ZWVkLFxuICAgICAgIGBHdWFyYW50ZWVkIE1pbmltdW1gID0gR3VhcmFudGVfMSxcbiAgICAgICBgTGFzdCBJbnNwZWN0aW9uIFR5cGVgID0gTGFzdF9JbnNwZSxcbiAgICAgICBgTGFzdCBJbnNwZWN0aW9uIFN0YW5kYXJkYCA9IExhc3RfSW5zXzEsXG4gICAgICAgYExhc3QgSW5zcGVjdGlvbiBSYXRpbmcgLSBGaW5hbGAgPSBMYXN0X0luc18yLFxuICAgICAgIGBMYXN0IEluc3BlY3Rpb24gRGF0ZWAgPSBMYXN0X0luc18zLFxuICAgICAgIGBTZWNvbmQgdG8gTGFzdCBJbnNwZWN0aW9uIFR5cGVgID0gU2Vjb25kX3RvLFxuICAgICAgIGBTZWNvbmQgdG8gTGFzdCBJbnNwZWN0aW9uIFN0YW5kYXJkYCA9IFNlY29uZF90XzEsXG4gICAgICAgYFNlY29uZCB0byBMYXN0IEluc3BlY3Rpb24gUmF0aW5nYCA9IFNlY29uZF90XzIsXG4gICAgICAgYFNlY29uZCB0byBMYXN0IEluc2VwY3Rpb24gRGF0ZWAgPSBTZWNvbmRfdF8zLFxuICApICU+JSBcbiAgcmVsb2NhdGUoYEd1YXJhbnRlZWQgTWluaW11bWAsIC5hZnRlciA9IGBHdWFyYW50ZWVkIE1pbmltdW0gKGNoYXJhY3RlcilgKSAlPiUgXG4gIHNlbGVjdCgtYEd1YXJhbnRlZWQgTWluaW11bSAoY2hhcmFjdGVyKWApXG5gYGAifQ== -->
 <pre class="r"><code>facilities &lt;- rename(facilities,
        `Accuracy Score` = Accuracy_S,
        `Accuracy Type` = Accuracy_T,
@@ -311,8 +311,7 @@ opts_chunk$set(results = &#39;asis&#39;,
        `Second to Last Insepction Date` = Second_t_3,
   ) %&gt;% 
   relocate(`Guaranteed Minimum`, .after = `Guaranteed Minimum (character)`) %&gt;% 
-  select(-`Guaranteed Minimum (character)`)
-</code></pre>
+  select(-`Guaranteed Minimum (character)`)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -545,23 +544,23 @@ opts_chunk$set(results = &#39;asis&#39;,
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="estimated-number-of-empty-beds" class="section level2">
-<h2>Estimated number of empty beds</h2>
+<div id="estimated-number-of-ghost-beds" class="section level2">
+<h2>Estimated number of “Ghost Beds”</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmFjaWxpdGllcyAlPiUgXG4gIGFzX3RpYmJsZSgpICU+JSBcbiAgc2VsZWN0KGMoTmFtZSwgYEd1YXJhbnRlZWQgTWluaW11bWAsIGBUb3RhbCBEZXRhaW5lZGAsIGBQZXJjZW50IE5vIFRocmVhdGApKSAlPiUgXG4gIGZpbHRlcihgR3VhcmFudGVlZCBNaW5pbXVtYCA+MCkgJT4lIFxuICBtdXRhdGUoYEVzdGltYXRlZCBFbXB0eSBCZWRzYCA9IGBHdWFyYW50ZWVkIE1pbmltdW1gIC0gYFRvdGFsIERldGFpbmVkYCkgJT4lIFxuICBzZWxlY3QoYyhOYW1lLCBgRXN0aW1hdGVkIEVtcHR5IEJlZHNgKSkgJT4lIFxuICBhcnJhbmdlKGRlc2MoYEVzdGltYXRlZCBFbXB0eSBCZWRzYCkpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmFjaWxpdGllcyAlPiUgXG4gIGFzX3RpYmJsZSgpICU+JSBcbiAgc2VsZWN0KGMoTmFtZSwgYEd1YXJhbnRlZWQgTWluaW11bWAsIGBUb3RhbCBEZXRhaW5lZGAsIGBQZXJjZW50IE5vIFRocmVhdGApKSAlPiUgXG4gIGZpbHRlcihgR3VhcmFudGVlZCBNaW5pbXVtYCA+MCkgJT4lIFxuICBtdXRhdGUoYEVzdGltYXRlZCBHaG9zdCBCZWRzYCA9IGBHdWFyYW50ZWVkIE1pbmltdW1gIC0gYFRvdGFsIERldGFpbmVkYCkgJT4lIFxuICBzZWxlY3QoYyhOYW1lLCBgRXN0aW1hdGVkIEdob3N0IEJlZHNgKSkgJT4lIFxuICBhcnJhbmdlKGRlc2MoYEVzdGltYXRlZCBHaG9zdCBCZWRzYCkpXG5gYGAifQ== -->
 <pre class="r"><code>facilities %&gt;% 
   as_tibble() %&gt;% 
   select(c(Name, `Guaranteed Minimum`, `Total Detained`, `Percent No Threat`)) %&gt;% 
   filter(`Guaranteed Minimum` &gt;0) %&gt;% 
-  mutate(`Estimated Empty Beds` = `Guaranteed Minimum` - `Total Detained`) %&gt;% 
-  select(c(Name, `Estimated Empty Beds`)) %&gt;% 
-  arrange(desc(`Estimated Empty Beds`))</code></pre>
+  mutate(`Estimated Ghost Beds` = `Guaranteed Minimum` - `Total Detained`) %&gt;% 
+  select(c(Name, `Estimated Ghost Beds`)) %&gt;% 
+  arrange(desc(`Estimated Ghost Beds`))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6NTAsIm5jb2wiOjIsInN1bW1hcnkiOnsiQSB0aWJibGUiOlsiNTAgeCAyIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQnRVWHkyNWJSZlEyaWRzbW9TRjlDSXJhUm9OcHBiUW9hWk1LeExKKzVPSFVTU3piQ20wWHRKTjd4L2FRdVRObVptNFNWeUFWRUdVQkMxakF1cC9Cc2wrQStBUStnU1Vyd3JtZUdUOXVmUjIyV0xMT3pEbG56bXZPWTI2MStPait6S01aei9NbXZTa3Y0MDFtWU9tZExWUldWajlhOWJ5cENkaWRBY3AwREkrQjZ6SXNZdVE4L0ZjdDRWWk5STHFGNnVRWUs3U09ROG82cUVvVURRalhGRE5VQUVpa1pYNi9qRkVGc3hDamdwQ1MrSm9LYmpuUUVzcTFsYkNNMTBjd0pvVXQ1QUxDTU5jQ2xRcHJxQ0tGVDVTaXZEbk1kYldteVJHV0doV0pqazNxS2JUMGUzWHNDOUF6VWdaYTNCRlN0NDZJNnA1SEJTMXYyM1B2NWdJY0tqQXY0cnBqaUlOaTcreHEzRUhiUk9FM0ZLUEZHdWFvU0VsVG9FTFFjQUxSUXl3NTZVbE1qZUhOTWxhWU1aSm04UmJoMk1uTTFpRjZtUHRrd0U1cnl6cjJLYU82NDI1bThCckh4Uk1aeHJLSXFLS1l2K21laS91bmxQTXh0NWZkd3Y2QmdsTVZMS2xxamVIOFlGTkVTc2Z5QmRjUyt6cmRpK3RWNnJlT2hBakdpTHUwSVJnRUZ0VTAxZ1RsT0NmSGxuSnRqYUc5Ym1oVEZhQnRzS0VwUWlJN1k2TjBjVjJ3ZzY3UjI1aHlWR3I3bGpCYmdZUkNKWVgzQ2JPb3hWSVkwcWJFQXpGVWFMZUJjcUNGK2hoTWtPRWhCYk1zLzRkRndnL2hwc2VFQXkzR2lZVksxQjY1VVY5R1JhQnZSaHJLSmVYR2J1UlpSUFlGQkdSTWhLL2xwWUJ5Q2xBZDhrclJVUUcrV1FyYllEbWdxNlJwNktuaXN1dE1TQkluYUkzSVF3b3dMYUlMdTdBV0xvL1R1TEtueDhaNVc1SkhsTDlaRjhQOUNqS2lncFU0MVRwVDZYdEVCaWwxNmRwQ0NiZEFtQjlKU0wwZ1lxTXZyd0xKNDBwNG9TSXhsVFR1ZEVHNk4rOVZxWEU3TGV0dnJUSDZISkpPdC81RGJDNDlGdktnSDJvS1plcHlMeDgxR3BnSnRKakhHaDlTZlB2VTBOeDZLS0ZlVUxlUm5zbzgvempheDA3ekZxYXVScTVWcVVBYmtISUJTYnVyMlNKUkJHcHJqNUlqZDZxQXBXQ1VqeW5vYk55THk5RExSaVhyY0FKdU1Cd1FkVXJHWkhOUXFMMm1Wb24yR2ZWUkRUY0lIQ21Jc00xNjNlWnViN1FReWZ2YXQ2SkR3aWxMZFROYndLd0ZKamc3UmwyNTU4M0ZFL3JCcTgvamdlNDkrUFVUQTM5cEcvanpsd2IrK0xlQlA5d3o4UHNYRmo0ejhLWGxmemx2NEhjL0dmanRnMkg0emFLQlgvOW1vWlh6WXRQQXIvNHc4TG1WOTd3eUREdVcvL2d2QzE5WmFPMDRzdlFqYTRlMmVPMFpxQ3hkV1QrKytOUENTZ0lpQTlzV0hsZzlEY3RQN0g3ZnlzTVdQclA2UHJQNm5ydzJjTlB1Tnl4Y3MveDV1emZBZTExNFlWZERUNm9NeHlGUm5ubE9UVmprMUE0ZzdmckttdEkwaENrVm9MV3dEWGVkSjRGS0NKbUdkcnpzQkYySUJjVzZUazVPZms5cTh4bFdUcHREemdSUXhjc05HZXRNeUZXTnA3NWdVY2dUUjg0M0NaU3pscDNFZ1VuY2hNU2JqRTI0RTV2d2YvZ2JGeVpPckl0M1J0ekJ1VndRU09oVWpsVG90NDVNOXdYaDNIOUMyeTVDWlJqbE9nb2NhYm9zZUhNUU1aZnpZUUJndjROcVBrdy9pNzNRdzlZN2JZYzhhNnJjN3Q0Q0pXaURDRjhFSkhBYzhCNlRmcytNM0c3VnlZdkZ4RjBFdW1pUGUzWWJNM0ozbllTNDk1eVlYbis4dXZJMFY5NnRPWmZMNUpBd2xCdmU1b2UzaGVGdDBRbUw1YU9DcEtHem9vdllpYnRZSHpsckRCaEV2VzFSQ2M1TDhUQ3R0eVRCR2hsTks2bVUxVlRLZlV1NUhGTjJ4QkRSa2JaaHRtQXQ1RUJuN3owWUl3eVRSeE9vdzIzS2FSZzU2OTZwQ3cxZDE1aXVUS3g1TDlaWERIVjdGRzNPMEJMWWl4VUNWOGwxMzBZbkN0Nzg4R3JrcW0yL21RWlM1R3FTQm1rSnJrZ25kQ0ZKcjBKNnd0eGRRdXNVWmthYWhtSS90eGZnd1NMZzlRRlB4ekYyWk5PNUVoYWhkRTVqVzdwZTBoNndicmdCbldYeGRib09OK21LRVNRb1VPOGlPWTJiVFVtYWZlZk9tNjhzYmZ2WmxHc0dQYkVOZUNxSmVLYitZLzVEU3MrSmRtd1BhSjJJUDQ0emljTm5aQUl4SC9HNFdRZExmaXZpQjBzckh3TnVwa3Mzdnd0MnZUcXdua2kwcVl5empFQmI0YzZQREJ2NHBKaURxZEFkQ3N0dFNYdSt6d0JXTGVzNDh4d0dXcnpEV0FmL0JVZjJ4UWNWRUFBQSJ9 -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6NTAsIm5jb2wiOjIsInN1bW1hcnkiOnsiQSB0aWJibGUiOlsiNTAgeCAyIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQnRVWFRXOFRSM1JKWWlCSkNaOXFxWUJvNm9JVXFCSWdDS2xIL0JFbkRrNWkyUllGRG9YSjd0aWVabmJHblptTlk5Ukt0Rlhwb1QyMGgvYk16K2lSWDFEMUovUW45TmhUdzF2UGpHTXZYcWZYV3JMZXpIdHYzdGU4ajlsYThmRzl1Y2R6bnVkTmV6TmV4cHZPd05JN1dhamVYYjIvNm5relU3QTdBWlRaR0I0QTEwVll4TWh6OEYrMWhCdDFFZWsyYXBBRHJGQUpoNVQxVUkwb0doQ3VLV2FvQUpCSXkveFJCYU1xWmlGR0JTRWw4VFVWM0hLZ1paVHJLR0VacjQ1aFRBcGJ6QVdFWWE0RktoZldVRlVLbnloRmVXdVU2M0pka3k2V0doV0pqazBhS0xUME93M3NDOUF6VmdaYTJoWlN0N3RFOWMramdwWTM3YmtQY2dFT0ZaZ1hjZDB6eEdHeHQzWTA3cUV0b3ZBN2l0RlNIWE5VcEtRbFVDRm9Pb0hvSVphY0RDU214dkI2QlN2TUdFbXplSk53N0dSbUd4QTl6SDB5WktlMXBZUjl5cWp1dVpzWnZzWko4VVNHc1NJaXFpam03N3JuNHY0WjVYekM3V1Uzc2IrbjRGUVZTNnJhRXpnLzNoQ1IwckY4d2JYRXZrNzM0bXFOK3UydUVNRUVjUmZXQllQQW9yckdtcUFjNStUQVVxNnNNZlNvSDlwVUJXZ0xiR2lKa01qZXhDaWRMd20yMXpkNkMxT095aDNmRXVhcmtGQ29yUEF1WVJhMVZBNUQycEo0S0lZSzdUUlJEclJRSDRNSk10eW5ZSmJsLzZSSStEN2M5SVJ3b0tVNHNWQ1oyaVBYR2l1b0NQU05TRU81cE56WXRUeUx5SzZBZ0V5SThKVzhGRkJPQVdwQVhpazZMc0RYeTJFSExBZDBqYlFNUFZWY3RzU0VKSEdDMW9uY3B3RFRJcnE0QTJ2aDhqaU5LM3Q4Ykp5M1pkbWwvTjI2R08xWGtCRlZyTVN4MXBsS2YwUmtrRktYcmkyVWNSdUUrWkdFMUFzaU52N3lxcEE4cm9RWHF4SlRTZU5PRjZSNzgyR05HcmZUc3Y3R0dxTXZJT2wwK3ovRTVzSVRJZmVPUWsyaFRGM3U1YU5tRXpPQmx2Slk0MzJLYng0Ym1oc1BKZFFMNmpmU1k1blBQWWwyc2RPOGlhbXJrU3MxS3RBNnBGeEEwdTVxdmtnVWdkcDZSRW5YblNwZ0tSamxFd282Ry9maUN2U3ljY2s2bW9EckRBZEVIWk14MlJ3VTZxQ3BWYU5kUm4xVXgwMENSd29pN0xCQnQ3azlHQzFFOGlQdG05RSs0WlNsdXBrdFlOWUdFNXdkNDY3Yzh4YmlDZjNnOVJmeFFQY2UvUGFwZ2I5MkRQemxLd04vK3NmQUgrOFkrTU5MQzU4YitNcnl2enBuNFBjL0cvamRnMUg0N1pLQjMveHVvWlh6Y3NQQXIvODA4SVdWOTZJNkNudVcvK0J2QzE5YmFPM29XbnJYMnFFdFhuc0dLa3RYMW84di83S3dtb0RJd0k2RmUxWlAwL0lUdTkrMThyQ0Z6NjIrejYyK3AyOE0zTEQ3ZFF2WExIL2U3ZzN3M2hSZTJ0WElreXJEY1VpVVo1NVRVeFk1c3cxSXU3NjBwalFOWVVvRmFMMHQ0QW1TSjRGS0NKbUZkcnppQkoySkJjVzZEZzhQLzBocTh4bFdUcHREemdWUXhTdE5HZXRNeUZYTlo3NWdVY2dUUjA2M0NKU3pscjNFZ1duY2dzU2JqazI0Rlp2d2YvZ2JGNllPcll1M3h0ekJxVndRU09oVWpsUTRhaDJaL2d2Q3VmK1VkbHlFS2pES2RSUTQwbXhGOE5Zd1lpSG53d0RBZmcvVmZaaCtGbnRtZ0czME9nNTUwbFM1M2IwSFN0QTZFYjRJU09BNDREMG0vWUVadVoyYWt4ZUxpYnNJZE5FQjkvd1dadVIyaVlSNDhKeVlMVDFadmZzc1Y5bXBPNWNyWko4d2xCdmQ1a2UzaGRGdDBRbUw1YU9DcEtHem9vL1lqcnZZRVhMZUdEQ01PbXRSQ2M0TDhUQnR0Q1hCR2hsTmQxTXBxNm1VZTVaeU1hWnNpeEdpSTIzQmJNRmF5S0hPUG5nd1JoZ21qeVpRaDF1VTB6QnkxcjNmRUJxNnJqRmRtVmp6UWF3dkdlcldPTnFDb1NXdzU2c0VycExySXh1ZEtIanp3NnVScTQ3OVpocEtrY3RKR3FRbHVDS2QwTVVrdlFicENYTjNHWlVvekl3MERjV2ozRjZFQjR1QTF3YzhIU2ZZa1UzblNsaUUwam1OYmVsNlNXZkl1dEVHZEpMRjErazYzTFFyUnBDZ1FMMkw1Q3h1dFNScEhUbDMybnhsYWR2UFpsd3pHSWh0d2xOSnhEUDFYL01mVVhwS2RHSjdRT3RVL0hHY1NSdytJUk9Jc3hHUG0zV3c3TGNqdnJkOEgxQnpmYkw1bmJIcjFhSDFWS0pMWlp4aEJMb0tkMjVrMk5BWHhRSU1oZjVNV09sSU9uQjlEckJxUmNlSjV6RFE0UjNHK3ZjV3pOL3hsQlFRQUFBPSJ9 -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Estimated Empty Beds"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"South Texas Family Residential Center","2":"2101"},{"1":"La Palma Correction Center - Apso","2":"1422"},{"1":"La Palma Correctional Center","2":"1372"},{"1":"Adelanto ICE Processing Center","2":"1119"},{"1":"Stewart Detention Center","2":"927"},{"1":"Tacoma ICE Processing Center (Northwest Det Ctr)","2":"870"},{"1":"Adams County Det Center","2":"752"},{"1":"Otay Mesa Detention Center (San Diego Cdf)","2":"748"},{"1":"Karnes County Residential Center","2":"718"},{"1":"Lasalle ICE Processing Center (Jena)","2":"706"},{"1":"Torrance County Detention Facility","2":"690"},{"1":"South Texas ICE Processing Center","2":"616"},{"1":"South Louisiana Detention Center","2":"616"},{"1":"Winn Correctional Center","2":"581"},{"1":"Jackson Parish Correctional Center","2":"567"},{"1":"Houston Contract Detention Facility","2":"560"},{"1":"Richwood Correctional Center","2":"521"},{"1":"Golden State Annex","2":"477"},{"1":"El Valle Detention Facility","2":"423"},{"1":"Montgomery ICE Processing Center","2":"421"},{"1":"Folkston Main Ipc","2":"421"},{"1":"Port Isabel","2":"408"},{"1":"Immigration Centers Of America Farmville","2":"399"},{"1":"Denver Contract Detention Facility (Cdf) Ii","2":"394"},{"1":"T. Don Hutto Detention Center","2":"390"},{"1":"Bluebonnet Detention Facility","2":"376"},{"1":"Broward Transitional Center","2":"369"},{"1":"Imperial Regional Detention Facility","2":"326"},{"1":"Florence Service Processing Center","2":"320"},{"1":"Otero County Processing Center","2":"312"},{"1":"Denver Contract Detention Facility","2":"307"},{"1":"Irwin County Detention Center","2":"286"},{"1":"El Paso Service Processing Center","2":"277"},{"1":"Mesa Verde ICE Processing Center","2":"277"},{"1":"Iah Secure Adult Detention Facility (Polk)","2":"274"},{"1":"Prairieland Detention Facility","2":"258"},{"1":"River Correctional Center","2":"221"},{"1":"Elizabeth Contract Detention Facility","2":"183"},{"1":"York County Prison","2":"173"},{"1":"Buffalo (Batavia) Service Processing Center","2":"148"},{"1":"Krome North Service Processing Center","2":"140"},{"1":"Yuba County Jail","2":"131"},{"1":"Rio Grande Detention Center","2":"120"},{"1":"Desert View","2":"107"},{"1":"Caroline Detention Facility","2":"48"},{"1":"San Luis Regional Detention Center","2":"46"},{"1":"Glades County Detention Center","2":"43"},{"1":"Allen Parish Public Safety Complex","2":"36"},{"1":"Northwestern Regional Juvenile Detention Center","2":"2"},{"1":"Calhoun County Correctional Center","2":"-39"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[50]},"pages":{}}}
+{"columns":[{"label":["Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Estimated Ghost Beds"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"South Texas Family Residential Center","2":"2101"},{"1":"La Palma Correction Center - Apso","2":"1422"},{"1":"La Palma Correctional Center","2":"1372"},{"1":"Adelanto ICE Processing Center","2":"1119"},{"1":"Stewart Detention Center","2":"927"},{"1":"Tacoma ICE Processing Center (Northwest Det Ctr)","2":"870"},{"1":"Adams County Det Center","2":"752"},{"1":"Otay Mesa Detention Center (San Diego Cdf)","2":"748"},{"1":"Karnes County Residential Center","2":"718"},{"1":"Lasalle ICE Processing Center (Jena)","2":"706"},{"1":"Torrance County Detention Facility","2":"690"},{"1":"South Texas ICE Processing Center","2":"616"},{"1":"South Louisiana Detention Center","2":"616"},{"1":"Winn Correctional Center","2":"581"},{"1":"Jackson Parish Correctional Center","2":"567"},{"1":"Houston Contract Detention Facility","2":"560"},{"1":"Richwood Correctional Center","2":"521"},{"1":"Golden State Annex","2":"477"},{"1":"El Valle Detention Facility","2":"423"},{"1":"Montgomery ICE Processing Center","2":"421"},{"1":"Folkston Main Ipc","2":"421"},{"1":"Port Isabel","2":"408"},{"1":"Immigration Centers Of America Farmville","2":"399"},{"1":"Denver Contract Detention Facility (Cdf) Ii","2":"394"},{"1":"T. Don Hutto Detention Center","2":"390"},{"1":"Bluebonnet Detention Facility","2":"376"},{"1":"Broward Transitional Center","2":"369"},{"1":"Imperial Regional Detention Facility","2":"326"},{"1":"Florence Service Processing Center","2":"320"},{"1":"Otero County Processing Center","2":"312"},{"1":"Denver Contract Detention Facility","2":"307"},{"1":"Irwin County Detention Center","2":"286"},{"1":"El Paso Service Processing Center","2":"277"},{"1":"Mesa Verde ICE Processing Center","2":"277"},{"1":"Iah Secure Adult Detention Facility (Polk)","2":"274"},{"1":"Prairieland Detention Facility","2":"258"},{"1":"River Correctional Center","2":"221"},{"1":"Elizabeth Contract Detention Facility","2":"183"},{"1":"York County Prison","2":"173"},{"1":"Buffalo (Batavia) Service Processing Center","2":"148"},{"1":"Krome North Service Processing Center","2":"140"},{"1":"Yuba County Jail","2":"131"},{"1":"Rio Grande Detention Center","2":"120"},{"1":"Desert View","2":"107"},{"1":"Caroline Detention Facility","2":"48"},{"1":"San Luis Regional Detention Center","2":"46"},{"1":"Glades County Detention Center","2":"43"},{"1":"Allen Parish Public Safety Complex","2":"36"},{"1":"Northwestern Regional Juvenile Detention Center","2":"2"},{"1":"Calhoun County Correctional Center","2":"-39"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[50]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
@@ -638,10 +637,193 @@ main_map +
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGVzY3IoZGYsIHRyYW5zcG9zZSA9IFRSVUUsIHN0YXRzID0gYyhcIm1lYW5cIiwgXCJzZFwiLCBcIm1pblwiLCBcIm1lZFwiLCBcIm1heFwiKSwgaGVhZGluZ3MgPSBGQUxTRSlcbmBgYCJ9 -->
 <pre class="r"><code>descr(df, transpose = TRUE, stats = c(&quot;mean&quot;, &quot;sd&quot;, &quot;min&quot;, &quot;med&quot;, &quot;max&quot;), headings = FALSE)</code></pre>
 <!-- rnb-source-end -->
+<p>Non-numerical variable(s) ignored: Name, Address, City, State, AOR, Type Detailed, Male/Female, Last Inspection Type, Last Inspection Standard, Last Inspection Rating - Final, Last Inspection Date, Second to Last Inspection Type, Second to Last Inspection Standard, Second to Last Inspection Rating</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right"> </th>
+<th align="right">Mean</th>
+<th align="right">Std.Dev</th>
+<th align="right">Min</th>
+<th align="right">Median</th>
+<th align="right">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><strong>Female Crim</strong></td>
+<td align="right">3.06</td>
+<td align="right">6.77</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">51.00</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>Female Non-Crim</strong></td>
+<td align="right">9.16</td>
+<td align="right">28.16</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">188.00</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>FY21 ALOS</strong></td>
+<td align="right">66.06</td>
+<td align="right">67.94</td>
+<td align="right">1.00</td>
+<td align="right">53.00</td>
+<td align="right">379.00</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>Guaranteed Minimum</strong></td>
+<td align="right">687.80</td>
+<td align="right">493.90</td>
+<td align="right">2.00</td>
+<td align="right">580.00</td>
+<td align="right">2400.00</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>ICE Threat Level 1</strong></td>
+<td align="right">31.68</td>
+<td align="right">45.52</td>
+<td align="right">0.00</td>
+<td align="right">14.00</td>
+<td align="right">276.00</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>ICE Threat Level 2</strong></td>
+<td align="right">12.04</td>
+<td align="right">16.02</td>
+<td align="right">0.00</td>
+<td align="right">6.00</td>
+<td align="right">98.00</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>ICE Threat Level 3</strong></td>
+<td align="right">11.46</td>
+<td align="right">15.73</td>
+<td align="right">0.00</td>
+<td align="right">6.00</td>
+<td align="right">94.00</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>Level A</strong></td>
+<td align="right">45.77</td>
+<td align="right">84.26</td>
+<td align="right">0.00</td>
+<td align="right">9.00</td>
+<td align="right">507.00</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>Level B</strong></td>
+<td align="right">16.75</td>
+<td align="right">26.20</td>
+<td align="right">0.00</td>
+<td align="right">6.50</td>
+<td align="right">156.00</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>Level C</strong></td>
+<td align="right">23.80</td>
+<td align="right">33.45</td>
+<td align="right">0.00</td>
+<td align="right">10.00</td>
+<td align="right">183.00</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>Level D</strong></td>
+<td align="right">22.96</td>
+<td align="right">34.32</td>
+<td align="right">0.00</td>
+<td align="right">10.00</td>
+<td align="right">181.00</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>Male Crim</strong></td>
+<td align="right">52.28</td>
+<td align="right">71.07</td>
+<td align="right">0.00</td>
+<td align="right">26.50</td>
+<td align="right">466.00</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>Male Non-Crim</strong></td>
+<td align="right">44.89</td>
+<td align="right">76.74</td>
+<td align="right">0.00</td>
+<td align="right">12.00</td>
+<td align="right">513.00</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>Mandatory</strong></td>
+<td align="right">74.73</td>
+<td align="right">95.63</td>
+<td align="right">0.00</td>
+<td align="right">35.00</td>
+<td align="right">526.00</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>No ICE Threat Level</strong></td>
+<td align="right">54.14</td>
+<td align="right">87.18</td>
+<td align="right">0.00</td>
+<td align="right">14.00</td>
+<td align="right">513.00</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>Percent No Threat</strong></td>
+<td align="right">37.80</td>
+<td align="right">27.71</td>
+<td align="right">0.00</td>
+<td align="right">31.02</td>
+<td align="right">100.00</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>Second to Last Inspection Date</strong></td>
+<td align="right">43514.23</td>
+<td align="right">703.61</td>
+<td align="right">39241.00</td>
+<td align="right">43695.50</td>
+<td align="right">44265.00</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>Total Detained</strong></td>
+<td align="right">109.40</td>
+<td align="right">138.55</td>
+<td align="right">0.00</td>
+<td align="right">54.50</td>
+<td align="right">734.00</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>Total Females Detained</strong></td>
+<td align="right">12.23</td>
+<td align="right">31.37</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">195.00</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>Total Males Detained</strong></td>
+<td align="right">97.18</td>
+<td align="right">129.32</td>
+<td align="right">0.00</td>
+<td align="right">48.00</td>
+<td align="right">734.00</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>Zip</strong></td>
+<td align="right">57841.61</td>
+<td align="right">28335.00</td>
+<td align="right">939.00</td>
+<td align="right">69732.00</td>
+<td align="right">99577.00</td>
+</tr>
+</tbody>
+</table>
 <!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIklDRSBEZXRlbnRpb24gRGF0YSBGWTIxIg0KYXV0aG9yOiBOYXRoYW4gQ3JhaWcNCmRhdGU6IDE1IEFwciAyMDIxDQpvdXRwdXQ6DQogIGh0bWxfbm90ZWJvb2s6DQogICAgdG9jOiB0cnVlDQogIGh0bWxfZG9jdW1lbnQ6DQogICAgZGZfcHJpbnQ6IHBhZ2VkDQogICAgdG9jOiB0cnVlDQogICAga2VlcF9tZDogeWVzDQotLS0NCiMgSW50cm9kdWN0aW9uDQpUaGlzIGRvY3VtZW50IHJlcHJlc2VudHMgZXhwbG9yYXRvcnkgZGF0YSBhbmFseXNpcyBvZiBJQ0UncyBGaXNjYWwgWWVhciBFbmQgRGV0ZW50aW9uIFJlcG9ydHMuIEN1cnJlbnRseSwgSSBhbSBmb2N1c2luZyBvbiB0aGUgRlkyMSBkYXRhc2V0Lg0KDQpgYGB7ciBsb2FkIGxpYnJhcmllc30NCmxpYnJhcnkoc2YpDQpsaWJyYXJ5KGdncGxvdDIpDQpsaWJyYXJ5KHJlYWR4bCkNCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShzdW1tYXJ5dG9vbHMpDQpsaWJyYXJ5KGtuaXRyKQ0Kb3B0c19jaHVuayRzZXQocmVzdWx0cyA9ICdhc2lzJywNCiAgICAgICAgICAgICAgIGNvbW1lbnQgPSBOQSwNCiAgICAgICAgICAgICAgIHByb21wdCA9IEZBTFNFLA0KICAgICAgICAgICAgICAgY2FjaGUgPSBGQUxTRSkNCmBgYA0KDQoNCmBgYHtyfQ0Kc3Rfb3B0aW9ucyhwbGFpbi5hc2NpaSA9IEZBTFNFLA0KICAgICAgICAgICBmb290bm90ZSA9IE5BLA0KICAgICAgICAgICBzdWJ0aXRsZS5lbXBoYXNpcyA9IEZBTFNFKQ0KYGBgDQoNCg0KDQojIyBMb2FkIERhdGENCkRhdGEgd2VyZSBkb3dubG9hZGVkIGZyb20gdGhlIFtJQ0UgRGV0ZW50aW9uIE1hbmFnZW1lbnRdKGh0dHBzOi8vd3d3LmljZS5nb3YvZGV0YWluL2RldGVudGlvbi1tYW5hZ2VtZW50KSB3ZWJwYWdlLg0KDQoNCkJhc2VkIG9uIGZhY2lsaXR5IGFkZHJlc3MsIGNvb3JkaW5hdGVzIHdlcmUgZXN0YWJsaXNoZWQgdXNpbmcgW0dlb2NvZGlvXShodHRwczovL3d3dy5nZW9jb2QuaW8vKSwgYXBwZW5kZWQgdG8gdGhlIHNwcmVhZHNoZWV0IGFuZCBjb252ZXJ0ZWQgdG8gYSBzaGFwZWZpbGUuIFRoaXMgd29yayB3YXMgZG9uZSB1c2luZyBBcmNHSVMuDQoNCmBgYHtyIHJlYWQgc3BhdGlhbCBkYXRhfQ0KZmFjaWxpdGllcyA8LSBzdF9yZWFkKCIuL21hcF9kYXRhL0ZhY2lsaXRpZXNfRlkyMS5zaHAiKQ0Kc3RhdGVzIDwtIHN0X3JlYWQoIi4vbWFwX2RhdGEvY2JfMjAxOF91c19zdGF0ZV81MDBrLnNocCIpDQpgYGANCg0KYGBge3IgUmVuYW1lIEZpZWxkc30NCmZhY2lsaXRpZXMgPC0gcmVuYW1lKGZhY2lsaXRpZXMsDQogICAgICAgYEFjY3VyYWN5IFNjb3JlYCA9IEFjY3VyYWN5X1MsDQogICAgICAgYEFjY3VyYWN5IFR5cGVgID0gQWNjdXJhY3lfVCwNCiAgICAgICBgWmlwIEdlb2NvZGVkYCA9IFppcF9HZW9jb2QsDQogICAgICAgYFR5cGUgRGV0YWlsZWRgID0gVHlwZV9EZXRhaSwNCiAgICAgICBgTWFsZS9GZW1hbGVgID0gTWFsZV9GZW1hbCwNCiAgICAgICBgTGV2ZWwgQWAgPSBMZXZlbF9BLA0KICAgICAgIGBMZXZlbCBCYCA9IExldmVsX0IsDQogICAgICAgYExldmVsIENgID0gTGV2ZWxfQywNCiAgICAgICBgTGV2ZWwgRGAgPSBMZXZlbF9ELA0KICAgICAgIGBNYWxlIENyaW1gID0gTWFsZV9DcmltLA0KICAgICAgIGBNYWxlIE5vbiBDcmltYCA9IE1hbGVfTm9uX0MsDQogICAgICAgYEZlbWFsZSBDcmltYCA9IEZlbWFsZV9DcmksDQogICAgICAgYEZlbWFsZSBOb24gQ3JpbWAgPSBGZW1hbGVfTm9uLA0KICAgICAgIGBJQ0UgVGhyZWF0IExldmVsIDFgID0gSUNFX1RocmVhdCwNCiAgICAgICBgSUNFIFRocmVhdCBMZXZlbCAyYCA9IElDRV9UaHJlXzEsDQogICAgICAgYElDRSBUaHJlYXQgTGV2ZWwgM2AgPSBJQ0VfVGhyZV8yLA0KICAgICAgIGBJQ0UgTm8gVGhyZWF0IExldmVsYCA9IE5vX0lDRV9UaHIsDQogICAgICAgYE1hbmRhdG9yeSBEZXRlbnRpb25gID0gTWFuZGF0b3J5LA0KICAgICAgIGBHdWFyYW50ZWVkIE1pbmltdW0gKGNoYXJhY3RlcilgID0gR3VhcmFudGVlZCwNCiAgICAgICBgR3VhcmFudGVlZCBNaW5pbXVtYCA9IEd1YXJhbnRlXzEsDQogICAgICAgYExhc3QgSW5zcGVjdGlvbiBUeXBlYCA9IExhc3RfSW5zcGUsDQogICAgICAgYExhc3QgSW5zcGVjdGlvbiBTdGFuZGFyZGAgPSBMYXN0X0luc18xLA0KICAgICAgIGBMYXN0IEluc3BlY3Rpb24gUmF0aW5nIC0gRmluYWxgID0gTGFzdF9JbnNfMiwNCiAgICAgICBgTGFzdCBJbnNwZWN0aW9uIERhdGVgID0gTGFzdF9JbnNfMywNCiAgICAgICBgU2Vjb25kIHRvIExhc3QgSW5zcGVjdGlvbiBUeXBlYCA9IFNlY29uZF90bywNCiAgICAgICBgU2Vjb25kIHRvIExhc3QgSW5zcGVjdGlvbiBTdGFuZGFyZGAgPSBTZWNvbmRfdF8xLA0KICAgICAgIGBTZWNvbmQgdG8gTGFzdCBJbnNwZWN0aW9uIFJhdGluZ2AgPSBTZWNvbmRfdF8yLA0KICAgICAgIGBTZWNvbmQgdG8gTGFzdCBJbnNlcGN0aW9uIERhdGVgID0gU2Vjb25kX3RfMywNCiAgKSAlPiUgDQogIHJlbG9jYXRlKGBHdWFyYW50ZWVkIE1pbmltdW1gLCAuYWZ0ZXIgPSBgR3VhcmFudGVlZCBNaW5pbXVtIChjaGFyYWN0ZXIpYCkgJT4lIA0KICBzZWxlY3QoLWBHdWFyYW50ZWVkIE1pbmltdW0gKGNoYXJhY3RlcilgKQ0KYGBgDQoNCg0KDQoNCg0KDQoNCg0KIyBTdW1tYXJ5IFN0YXRpc3RpY3MNCg0KQ2FsY3VsYXRlIGRldGVudGlvbiB0b3RhbHMuDQoNCmBgYHtyfQ0KZmFjaWxpdGllcyA8LSBmYWNpbGl0aWVzICU+JSANCiAgbXV0YXRlKGBUb3RhbCBEZXRhaW5lZGA9DQogICAgICAgICAgIGBGZW1hbGUgQ3JpbWAgKw0KICAgICAgICAgICBgRmVtYWxlIE5vbiBDcmltYCArDQogICAgICAgICAgIGBNYWxlIENyaW1gICsNCiAgICAgICAgICAgYE1hbGUgTm9uIENyaW1gKSAlPiUgDQogIG11dGF0ZShgVG90YWwgTWFsZXMgRGV0YWluZWRgID0NCiAgICAgICAgICAgYE1hbGUgQ3JpbWAgKw0KICAgICAgICAgICBgTWFsZSBOb24gQ3JpbWApICU+JSANCiAgbXV0YXRlKGBUb3RhbCBGZW1hbGVzIERldGFpbmVkYCA9DQogICAgICAgICAgIGBGZW1hbGUgQ3JpbWAgKw0KICAgICAgICAgICBgRmVtYWxlIE5vbiBDcmltYCkgJT4lIA0KICBtdXRhdGUoYFBlcmNlbnQgTm8gVGhyZWF0YCA9DQogICAgICAgICAgICAoYElDRSBObyBUaHJlYXQgTGV2ZWxgIC8NCiAgICAgICAgICAgYFRvdGFsIERldGFpbmVkYCkqMTAwKSAlPiUgDQogIHJlbG9jYXRlKGMoYFRvdGFsIEZlbWFsZXMgRGV0YWluZWRgLA0KICAgICAgICAgICAgIGBUb3RhbCBNYWxlcyBEZXRhaW5lZGAsDQogICAgICAgICAgICAgYFRvdGFsIERldGFpbmVkYCwNCiAgICAgICAgICAgICBgUGVyY2VudCBObyBUaHJlYXRgKSwgLmFmdGVyID0gYEd1YXJhbnRlZWQgTWluaW11bWApDQoNCmBgYA0KDQoNCmBgYHtyfQ0KZmFjaWxpdGllcyAlPiUgDQogIHNlbGVjdChjKC1gQWNjdXJhY3kgU2NvcmVgLCAtTG9uZ2l0dWRlLCAtTGF0aXR1ZGUsIC1aaXAsIC1gWmlwIEdlb2NvZGVkYCkpICU+JSANCiAgZGVzY3IodHJhbnNwb3NlID0gVFJVRSwgc3RhdHMgPSBjKCJtZWFuIiwgInNkIiwgIm1pbiIsICJtZWQiLCAibWF4IiksIGhlYWRpbmdzID0gRkFMU0UpDQpgYGANCg0KDQojIyBHdWFyYW50ZWVkIE1pbmltdW1zDQpPZiB0aGUgMTQyIGZhY2lsaXRpZXMgbGlzdGVkIGluIHRoZSBGWTIxIElDRSBEZXRlbnRpb24gWWVhciBFbmQgUmVwb3J0IDM1JSAobiA9IDUwKSBoYXZlIEd1YXJhbnRlZWQgTWluaW11bXMgYXMgcGFydCBvZiB0aGVpciBjb250cmFjdHMuIFRoZSB0YWJsZSBiZWxvdyBsaXN0cyB0aG9zZSBmYWNpbGl0aWVzIGluIGRlc2NlbmRpbmcgb3JkZXIgYmFzZWQgb24gdGhlIEd1YXJhbnRlZWQgTWluaW11bSBudW1iZXIgb2YgYmVkcyBzdGlwdWxhdGVkIGluIHRoZSBjb250cmFjdC4NCg0KYGBge3IgR3VhcmFudGVlZCBNaW5pbXVtc30NCmZhY2lsaXRpZXMgJT4lIA0KICBhc190aWJibGUoKSAlPiUgDQogIHNlbGVjdChjKE5hbWUsIGBHdWFyYW50ZWVkIE1pbmltdW1gLCBgVG90YWwgRGV0YWluZWRgLCBgTWFuZGF0b3J5IERldGVudGlvbmAsIGBQZXJjZW50IE5vIFRocmVhdGApKSAlPiUgDQogIGZpbHRlcihgR3VhcmFudGVlZCBNaW5pbXVtYCA+MCkgJT4lIA0KICBhcnJhbmdlKGRlc2MoYEd1YXJhbnRlZWQgTWluaW11bWApKQ0KYGBgDQoNCiMjIEVzdGltYXRlZCBudW1iZXIgb2YgZW1wdHkgYmVkcw0KYGBge3J9DQpmYWNpbGl0aWVzICU+JSANCiAgYXNfdGliYmxlKCkgJT4lIA0KICBzZWxlY3QoYyhOYW1lLCBgR3VhcmFudGVlZCBNaW5pbXVtYCwgYFRvdGFsIERldGFpbmVkYCwgYFBlcmNlbnQgTm8gVGhyZWF0YCkpICU+JSANCiAgZmlsdGVyKGBHdWFyYW50ZWVkIE1pbmltdW1gID4wKSAlPiUgDQogIG11dGF0ZShgRXN0aW1hdGVkIEVtcHR5IEJlZHNgID0gYEd1YXJhbnRlZWQgTWluaW11bWAgLSBgVG90YWwgRGV0YWluZWRgKSAlPiUgDQogIHNlbGVjdChjKE5hbWUsIGBFc3RpbWF0ZWQgRW1wdHkgQmVkc2ApKSAlPiUgDQogIGFycmFuZ2UoZGVzYyhgRXN0aW1hdGVkIEVtcHR5IEJlZHNgKSkNCmBgYA0KDQpgYGB7ciBjcm9wIHNwYXRpYWwgZmVhdHVyZXN9DQojIE5vdCBjdXJyZW50bHkgdXNpbmcsIGJ1dCBhIHdvcmtpbmcgZXhhbXBsZSBpcyBwcm92aWRlZC4NCg0KIyBmYWNpbGl0aWVzX2Nyb3AgPC0gc3RfY3JvcChmYWNpbGl0aWVzLCB4bWluID0gLTEyNSwgeG1heCA9IC02NCwNCiMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB5bWluID0gMTYuNSwgeW1heCA9IDQ5LjUpDQojIA0KIyBzdGF0ZXNfY3JvcCA8LSAgc3RfY3JvcChzdGF0ZXMsIHhtaW4gPSAtMTI1LCB4bWF4ID0gLTY0LA0KIyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHltaW4gPSAxNi41LCB5bWF4ID0gNDkuNSkNCmBgYA0KDQoNCmBgYHtyIGZhY2lsaXR5IG1hcCB3aXRoIG1hbmRhdG9yeSBkZXRlbnRpb24gYW5kIGd1YXJhbnRlZWQgbWluaW11bXN9DQptYWluX21hcCA8LSBnZ3Bsb3QoKSsNCiAgZ2VvbV9zZihkYXRhPXN0YXRlcykrDQogIGdlb21fc2YoZGF0YT1mYWNpbGl0aWVzLCBhZXMoY29sb3IgPSBgR3VhcmFudGVlZCBNaW5pbXVtYCwgc2l6ZSA9IGBNYW5kYXRvcnkgRGV0ZW50aW9uYCkpKw0KICAjIGdndGl0bGUoLA0KICAjICAgICAgICAgKSsNCiAgY29vcmRfc2YoKQ0KDQojIFpvb20gdGhlIG1hcC4gTm90ZSB0aGlzIG9ubHkgc2VlbXMgdG8gd29yayB3aGVuIGNhbGxlZCBzZXBhcmF0ZWx5Lg0KbWFpbl9tYXAgKw0KICBjb29yZF9zZih4bGltID0gYygtMTI1LC02NCksIHlsaW0gPSBjKDE2LjUsIDQ5LjUpLCBleHBhbmQgPSBGQUxTRSkrDQogIGxhYnMoDQogICAgdGl0bGUgPSAiSUNFIERldGVudGlvbiBGYWNpbGl0aWVzIiwNCiAgICBzdWJ0aXRsZSA9ICJTaG93aW5nIE1hbmRhdG9yeSBEZXRlbnRpb24gYW5kIENvbnRyYWN0dWFsIEd1YXJhbnRlZWQgTWluaW11bXMiLA0KICAgIGNhcHRpb24gPSAiRGF0YSBzb3VyY2U6IGh0dHBzOi8vd3d3LmljZS5nb3YvZGV0YWluL2RldGVudGlvbi1tYW5hZ2VtZW50IiwNCiAgICBjb2xvciA9Ikd1YXJhbnRlZWRcbk1pbmltdW0iLA0KICAgIHNpemUgPSAiTWFuZGF0b3J5XG5EZXRlbnRpb24iKQ0KYGBgDQoNCiMgTm90IFVzZWQNCg0KYGBge3IgcmVhZCB0YWJsZSBkYXRhLCBpbmNsdWRlPUZBTFNFfQ0KZGYgPC0gcmVhZF9leGNlbCgiZGF0YS9GWTIxX2RldGVudGlvbi1zdGF0c18wNDE0Lnhsc3giLCANCiAgc2hlZXQgPSAiRmFjaWxpdGllcyBGWTIxIFlURCIsIHNraXAgPSA2KSAlPiUgDQogIG11dGF0ZV9hdCgudmFycyA9IDk6MjIsIHJvdW5kKSAjIFJvdW5kIGF2ZXJhZ2VkIGZpZ3VyZXMgdG8gaW50ZXJnZXJzDQpgYGANCg0KDQpgYGB7cn0NCmRmIDwtIGRmICU+JSANCiAgbXV0YXRlKGBUb3RhbCBEZXRhaW5lZGA9DQogICAgICAgICAgIGBGZW1hbGUgQ3JpbWAgKw0KICAgICAgICAgICBgRmVtYWxlIE5vbi1DcmltYCArDQogICAgICAgICAgIGBNYWxlIENyaW1gICsNCiAgICAgICAgICAgYE1hbGUgTm9uLUNyaW1gKSAlPiUgDQogIG11dGF0ZShgVG90YWwgTWFsZXMgRGV0YWluZWRgID0NCiAgICAgICAgICAgYE1hbGUgQ3JpbWAgKw0KICAgICAgICAgICBgTWFsZSBOb24tQ3JpbWApICU+JSANCiAgbXV0YXRlKGBUb3RhbCBGZW1hbGVzIERldGFpbmVkYCA9DQogICAgICAgICAgIGBGZW1hbGUgQ3JpbWAgKw0KICAgICAgICAgICBgRmVtYWxlIE5vbi1DcmltYCkgJT4lIA0KICBtdXRhdGUoYFBlcmNlbnQgTm8gVGhyZWF0YCA9DQogICAgICAgICAgICAoYE5vIElDRSBUaHJlYXQgTGV2ZWxgIC8NCiAgICAgICAgICAgYFRvdGFsIERldGFpbmVkYCkqMTAwKQ0KYGBgDQoNCmBgYHtyfQ0KZGVzY3IoZGYsIHRyYW5zcG9zZSA9IFRSVUUsIHN0YXRzID0gYygibWVhbiIsICJzZCIsICJtaW4iLCAibWVkIiwgIm1heCIpLCBoZWFkaW5ncyA9IEZBTFNFKQ0KYGBg</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIklDRSBEZXRlbnRpb24gRGF0YSBGWTIxIg0KYXV0aG9yOiBOYXRoYW4gQ3JhaWcNCmRhdGU6IDE1IEFwciAyMDIxDQpvdXRwdXQ6DQogIGh0bWxfZG9jdW1lbnQ6DQogICAgZGZfcHJpbnQ6IHBhZ2VkDQogICAgdG9jOiB0cnVlDQogICAga2VlcF9tZDogeWVzDQogIGh0bWxfbm90ZWJvb2s6DQogICAgdG9jOiB0cnVlDQotLS0NCiMgSW50cm9kdWN0aW9uDQpUaGlzIGRvY3VtZW50IHJlcHJlc2VudHMgZXhwbG9yYXRvcnkgZGF0YSBhbmFseXNpcyBvZiBJQ0UncyBGaXNjYWwgWWVhciBFbmQgRGV0ZW50aW9uIFJlcG9ydHMuIEN1cnJlbnRseSwgSSBhbSBmb2N1c2luZyBvbiB0aGUgRlkyMSBkYXRhc2V0Lg0KDQpgYGB7ciBsb2FkIGxpYnJhcmllc30NCmxpYnJhcnkoc2YpDQpsaWJyYXJ5KGdncGxvdDIpDQpsaWJyYXJ5KHJlYWR4bCkNCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShzdW1tYXJ5dG9vbHMpDQpsaWJyYXJ5KGtuaXRyKQ0Kb3B0c19jaHVuayRzZXQocmVzdWx0cyA9ICdhc2lzJywNCiAgICAgICAgICAgICAgIGNvbW1lbnQgPSBOQSwNCiAgICAgICAgICAgICAgIHByb21wdCA9IEZBTFNFLA0KICAgICAgICAgICAgICAgY2FjaGUgPSBGQUxTRSkNCmBgYA0KDQoNCmBgYHtyfQ0Kc3Rfb3B0aW9ucyhwbGFpbi5hc2NpaSA9IEZBTFNFLA0KICAgICAgICAgICBmb290bm90ZSA9IE5BLA0KICAgICAgICAgICBzdWJ0aXRsZS5lbXBoYXNpcyA9IEZBTFNFKQ0KYGBgDQoNCg0KDQojIyBMb2FkIERhdGENCkRhdGEgd2VyZSBkb3dubG9hZGVkIGZyb20gdGhlIFtJQ0UgRGV0ZW50aW9uIE1hbmFnZW1lbnRdKGh0dHBzOi8vd3d3LmljZS5nb3YvZGV0YWluL2RldGVudGlvbi1tYW5hZ2VtZW50KSB3ZWJwYWdlLg0KDQoNCkJhc2VkIG9uIGZhY2lsaXR5IGFkZHJlc3MsIGNvb3JkaW5hdGVzIHdlcmUgZXN0YWJsaXNoZWQgdXNpbmcgW0dlb2NvZGlvXShodHRwczovL3d3dy5nZW9jb2QuaW8vKSwgYXBwZW5kZWQgdG8gdGhlIHNwcmVhZHNoZWV0IGFuZCBjb252ZXJ0ZWQgdG8gYSBzaGFwZWZpbGUuIFRoaXMgd29yayB3YXMgZG9uZSB1c2luZyBBcmNHSVMuDQoNCmBgYHtyIHJlYWQgc3BhdGlhbCBkYXRhfQ0KZmFjaWxpdGllcyA8LSBzdF9yZWFkKCIuL21hcF9kYXRhL0ZhY2lsaXRpZXNfRlkyMS5zaHAiKQ0Kc3RhdGVzIDwtIHN0X3JlYWQoIi4vbWFwX2RhdGEvY2JfMjAxOF91c19zdGF0ZV81MDBrLnNocCIpDQpgYGANCg0KYGBge3IgUmVuYW1lIEZpZWxkc30NCmZhY2lsaXRpZXMgPC0gcmVuYW1lKGZhY2lsaXRpZXMsDQogICAgICAgYEFjY3VyYWN5IFNjb3JlYCA9IEFjY3VyYWN5X1MsDQogICAgICAgYEFjY3VyYWN5IFR5cGVgID0gQWNjdXJhY3lfVCwNCiAgICAgICBgWmlwIEdlb2NvZGVkYCA9IFppcF9HZW9jb2QsDQogICAgICAgYFR5cGUgRGV0YWlsZWRgID0gVHlwZV9EZXRhaSwNCiAgICAgICBgTWFsZS9GZW1hbGVgID0gTWFsZV9GZW1hbCwNCiAgICAgICBgTGV2ZWwgQWAgPSBMZXZlbF9BLA0KICAgICAgIGBMZXZlbCBCYCA9IExldmVsX0IsDQogICAgICAgYExldmVsIENgID0gTGV2ZWxfQywNCiAgICAgICBgTGV2ZWwgRGAgPSBMZXZlbF9ELA0KICAgICAgIGBNYWxlIENyaW1gID0gTWFsZV9DcmltLA0KICAgICAgIGBNYWxlIE5vbiBDcmltYCA9IE1hbGVfTm9uX0MsDQogICAgICAgYEZlbWFsZSBDcmltYCA9IEZlbWFsZV9DcmksDQogICAgICAgYEZlbWFsZSBOb24gQ3JpbWAgPSBGZW1hbGVfTm9uLA0KICAgICAgIGBJQ0UgVGhyZWF0IExldmVsIDFgID0gSUNFX1RocmVhdCwNCiAgICAgICBgSUNFIFRocmVhdCBMZXZlbCAyYCA9IElDRV9UaHJlXzEsDQogICAgICAgYElDRSBUaHJlYXQgTGV2ZWwgM2AgPSBJQ0VfVGhyZV8yLA0KICAgICAgIGBJQ0UgTm8gVGhyZWF0IExldmVsYCA9IE5vX0lDRV9UaHIsDQogICAgICAgYE1hbmRhdG9yeSBEZXRlbnRpb25gID0gTWFuZGF0b3J5LA0KICAgICAgIGBHdWFyYW50ZWVkIE1pbmltdW0gKGNoYXJhY3RlcilgID0gR3VhcmFudGVlZCwNCiAgICAgICBgR3VhcmFudGVlZCBNaW5pbXVtYCA9IEd1YXJhbnRlXzEsDQogICAgICAgYExhc3QgSW5zcGVjdGlvbiBUeXBlYCA9IExhc3RfSW5zcGUsDQogICAgICAgYExhc3QgSW5zcGVjdGlvbiBTdGFuZGFyZGAgPSBMYXN0X0luc18xLA0KICAgICAgIGBMYXN0IEluc3BlY3Rpb24gUmF0aW5nIC0gRmluYWxgID0gTGFzdF9JbnNfMiwNCiAgICAgICBgTGFzdCBJbnNwZWN0aW9uIERhdGVgID0gTGFzdF9JbnNfMywNCiAgICAgICBgU2Vjb25kIHRvIExhc3QgSW5zcGVjdGlvbiBUeXBlYCA9IFNlY29uZF90bywNCiAgICAgICBgU2Vjb25kIHRvIExhc3QgSW5zcGVjdGlvbiBTdGFuZGFyZGAgPSBTZWNvbmRfdF8xLA0KICAgICAgIGBTZWNvbmQgdG8gTGFzdCBJbnNwZWN0aW9uIFJhdGluZ2AgPSBTZWNvbmRfdF8yLA0KICAgICAgIGBTZWNvbmQgdG8gTGFzdCBJbnNlcGN0aW9uIERhdGVgID0gU2Vjb25kX3RfMywNCiAgKSAlPiUgDQogIHJlbG9jYXRlKGBHdWFyYW50ZWVkIE1pbmltdW1gLCAuYWZ0ZXIgPSBgR3VhcmFudGVlZCBNaW5pbXVtIChjaGFyYWN0ZXIpYCkgJT4lIA0KICBzZWxlY3QoLWBHdWFyYW50ZWVkIE1pbmltdW0gKGNoYXJhY3RlcilgKQ0KYGBgDQoNCg0KDQoNCg0KDQoNCg0KIyBTdW1tYXJ5IFN0YXRpc3RpY3MNCg0KQ2FsY3VsYXRlIGRldGVudGlvbiB0b3RhbHMuDQoNCmBgYHtyfQ0KZmFjaWxpdGllcyA8LSBmYWNpbGl0aWVzICU+JSANCiAgbXV0YXRlKGBUb3RhbCBEZXRhaW5lZGA9DQogICAgICAgICAgIGBGZW1hbGUgQ3JpbWAgKw0KICAgICAgICAgICBgRmVtYWxlIE5vbiBDcmltYCArDQogICAgICAgICAgIGBNYWxlIENyaW1gICsNCiAgICAgICAgICAgYE1hbGUgTm9uIENyaW1gKSAlPiUgDQogIG11dGF0ZShgVG90YWwgTWFsZXMgRGV0YWluZWRgID0NCiAgICAgICAgICAgYE1hbGUgQ3JpbWAgKw0KICAgICAgICAgICBgTWFsZSBOb24gQ3JpbWApICU+JSANCiAgbXV0YXRlKGBUb3RhbCBGZW1hbGVzIERldGFpbmVkYCA9DQogICAgICAgICAgIGBGZW1hbGUgQ3JpbWAgKw0KICAgICAgICAgICBgRmVtYWxlIE5vbiBDcmltYCkgJT4lIA0KICBtdXRhdGUoYFBlcmNlbnQgTm8gVGhyZWF0YCA9DQogICAgICAgICAgICAoYElDRSBObyBUaHJlYXQgTGV2ZWxgIC8NCiAgICAgICAgICAgYFRvdGFsIERldGFpbmVkYCkqMTAwKSAlPiUgDQogIHJlbG9jYXRlKGMoYFRvdGFsIEZlbWFsZXMgRGV0YWluZWRgLA0KICAgICAgICAgICAgIGBUb3RhbCBNYWxlcyBEZXRhaW5lZGAsDQogICAgICAgICAgICAgYFRvdGFsIERldGFpbmVkYCwNCiAgICAgICAgICAgICBgUGVyY2VudCBObyBUaHJlYXRgKSwgLmFmdGVyID0gYEd1YXJhbnRlZWQgTWluaW11bWApDQoNCmBgYA0KDQoNCmBgYHtyfQ0KZmFjaWxpdGllcyAlPiUgDQogIHNlbGVjdChjKC1gQWNjdXJhY3kgU2NvcmVgLCAtTG9uZ2l0dWRlLCAtTGF0aXR1ZGUsIC1aaXAsIC1gWmlwIEdlb2NvZGVkYCkpICU+JSANCiAgZGVzY3IodHJhbnNwb3NlID0gVFJVRSwgc3RhdHMgPSBjKCJtZWFuIiwgInNkIiwgIm1pbiIsICJtZWQiLCAibWF4IiksIGhlYWRpbmdzID0gRkFMU0UpDQpgYGANCg0KDQojIyBHdWFyYW50ZWVkIE1pbmltdW1zDQpPZiB0aGUgMTQyIGZhY2lsaXRpZXMgbGlzdGVkIGluIHRoZSBGWTIxIElDRSBEZXRlbnRpb24gWWVhciBFbmQgUmVwb3J0IDM1JSAobiA9IDUwKSBoYXZlIEd1YXJhbnRlZWQgTWluaW11bXMgYXMgcGFydCBvZiB0aGVpciBjb250cmFjdHMuIFRoZSB0YWJsZSBiZWxvdyBsaXN0cyB0aG9zZSBmYWNpbGl0aWVzIGluIGRlc2NlbmRpbmcgb3JkZXIgYmFzZWQgb24gdGhlIEd1YXJhbnRlZWQgTWluaW11bSBudW1iZXIgb2YgYmVkcyBzdGlwdWxhdGVkIGluIHRoZSBjb250cmFjdC4NCg0KYGBge3IgR3VhcmFudGVlZCBNaW5pbXVtc30NCmZhY2lsaXRpZXMgJT4lIA0KICBhc190aWJibGUoKSAlPiUgDQogIHNlbGVjdChjKE5hbWUsIGBHdWFyYW50ZWVkIE1pbmltdW1gLCBgVG90YWwgRGV0YWluZWRgLCBgTWFuZGF0b3J5IERldGVudGlvbmAsIGBQZXJjZW50IE5vIFRocmVhdGApKSAlPiUgDQogIGZpbHRlcihgR3VhcmFudGVlZCBNaW5pbXVtYCA+MCkgJT4lIA0KICBhcnJhbmdlKGRlc2MoYEd1YXJhbnRlZWQgTWluaW11bWApKQ0KYGBgDQoNCiMjIEVzdGltYXRlZCBudW1iZXIgb2YgIkdob3N0IEJlZHMiDQpgYGB7cn0NCmZhY2lsaXRpZXMgJT4lIA0KICBhc190aWJibGUoKSAlPiUgDQogIHNlbGVjdChjKE5hbWUsIGBHdWFyYW50ZWVkIE1pbmltdW1gLCBgVG90YWwgRGV0YWluZWRgLCBgUGVyY2VudCBObyBUaHJlYXRgKSkgJT4lIA0KICBmaWx0ZXIoYEd1YXJhbnRlZWQgTWluaW11bWAgPjApICU+JSANCiAgbXV0YXRlKGBFc3RpbWF0ZWQgR2hvc3QgQmVkc2AgPSBgR3VhcmFudGVlZCBNaW5pbXVtYCAtIGBUb3RhbCBEZXRhaW5lZGApICU+JSANCiAgc2VsZWN0KGMoTmFtZSwgYEVzdGltYXRlZCBHaG9zdCBCZWRzYCkpICU+JSANCiAgYXJyYW5nZShkZXNjKGBFc3RpbWF0ZWQgR2hvc3QgQmVkc2ApKQ0KYGBgDQoNCmBgYHtyIGNyb3Agc3BhdGlhbCBmZWF0dXJlc30NCiMgTm90IGN1cnJlbnRseSB1c2luZywgYnV0IGEgd29ya2luZyBleGFtcGxlIGlzIHByb3ZpZGVkLg0KDQojIGZhY2lsaXRpZXNfY3JvcCA8LSBzdF9jcm9wKGZhY2lsaXRpZXMsIHhtaW4gPSAtMTI1LCB4bWF4ID0gLTY0LA0KIyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHltaW4gPSAxNi41LCB5bWF4ID0gNDkuNSkNCiMgDQojIHN0YXRlc19jcm9wIDwtICBzdF9jcm9wKHN0YXRlcywgeG1pbiA9IC0xMjUsIHhtYXggPSAtNjQsDQojICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgeW1pbiA9IDE2LjUsIHltYXggPSA0OS41KQ0KYGBgDQoNCg0KYGBge3IgZmFjaWxpdHkgbWFwIHdpdGggbWFuZGF0b3J5IGRldGVudGlvbiBhbmQgZ3VhcmFudGVlZCBtaW5pbXVtc30NCm1haW5fbWFwIDwtIGdncGxvdCgpKw0KICBnZW9tX3NmKGRhdGE9c3RhdGVzKSsNCiAgZ2VvbV9zZihkYXRhPWZhY2lsaXRpZXMsIGFlcyhjb2xvciA9IGBHdWFyYW50ZWVkIE1pbmltdW1gLCBzaXplID0gYE1hbmRhdG9yeSBEZXRlbnRpb25gKSkrDQogICMgZ2d0aXRsZSgsDQogICMgICAgICAgICApKw0KICBjb29yZF9zZigpDQoNCiMgWm9vbSB0aGUgbWFwLiBOb3RlIHRoaXMgb25seSBzZWVtcyB0byB3b3JrIHdoZW4gY2FsbGVkIHNlcGFyYXRlbHkuDQptYWluX21hcCArDQogIGNvb3JkX3NmKHhsaW0gPSBjKC0xMjUsLTY0KSwgeWxpbSA9IGMoMTYuNSwgNDkuNSksIGV4cGFuZCA9IEZBTFNFKSsNCiAgbGFicygNCiAgICB0aXRsZSA9ICJJQ0UgRGV0ZW50aW9uIEZhY2lsaXRpZXMiLA0KICAgIHN1YnRpdGxlID0gIlNob3dpbmcgTWFuZGF0b3J5IERldGVudGlvbiBhbmQgQ29udHJhY3R1YWwgR3VhcmFudGVlZCBNaW5pbXVtcyIsDQogICAgY2FwdGlvbiA9ICJEYXRhIHNvdXJjZTogaHR0cHM6Ly93d3cuaWNlLmdvdi9kZXRhaW4vZGV0ZW50aW9uLW1hbmFnZW1lbnQiLA0KICAgIGNvbG9yID0iR3VhcmFudGVlZFxuTWluaW11bSIsDQogICAgc2l6ZSA9ICJNYW5kYXRvcnlcbkRldGVudGlvbiIpDQpgYGANCg0KIyBOb3QgVXNlZA0KDQpgYGB7ciByZWFkIHRhYmxlIGRhdGEsIGluY2x1ZGU9RkFMU0V9DQpkZiA8LSByZWFkX2V4Y2VsKCJkYXRhL0ZZMjFfZGV0ZW50aW9uLXN0YXRzXzA0MTQueGxzeCIsIA0KICBzaGVldCA9ICJGYWNpbGl0aWVzIEZZMjEgWVREIiwgc2tpcCA9IDYpICU+JSANCiAgbXV0YXRlX2F0KC52YXJzID0gOToyMiwgcm91bmQpICMgUm91bmQgYXZlcmFnZWQgZmlndXJlcyB0byBpbnRlcmdlcnMNCmBgYA0KDQoNCmBgYHtyfQ0KZGYgPC0gZGYgJT4lIA0KICBtdXRhdGUoYFRvdGFsIERldGFpbmVkYD0NCiAgICAgICAgICAgYEZlbWFsZSBDcmltYCArDQogICAgICAgICAgIGBGZW1hbGUgTm9uLUNyaW1gICsNCiAgICAgICAgICAgYE1hbGUgQ3JpbWAgKw0KICAgICAgICAgICBgTWFsZSBOb24tQ3JpbWApICU+JSANCiAgbXV0YXRlKGBUb3RhbCBNYWxlcyBEZXRhaW5lZGAgPQ0KICAgICAgICAgICBgTWFsZSBDcmltYCArDQogICAgICAgICAgIGBNYWxlIE5vbi1DcmltYCkgJT4lIA0KICBtdXRhdGUoYFRvdGFsIEZlbWFsZXMgRGV0YWluZWRgID0NCiAgICAgICAgICAgYEZlbWFsZSBDcmltYCArDQogICAgICAgICAgIGBGZW1hbGUgTm9uLUNyaW1gKSAlPiUgDQogIG11dGF0ZShgUGVyY2VudCBObyBUaHJlYXRgID0NCiAgICAgICAgICAgIChgTm8gSUNFIFRocmVhdCBMZXZlbGAgLw0KICAgICAgICAgICBgVG90YWwgRGV0YWluZWRgKSoxMDApDQpgYGANCg0KYGBge3J9DQpkZXNjcihkZiwgdHJhbnNwb3NlID0gVFJVRSwgc3RhdHMgPSBjKCJtZWFuIiwgInNkIiwgIm1pbiIsICJtZWQiLCAibWF4IiksIGhlYWRpbmdzID0gRkFMU0UpDQpgYGA=</div>
 
 
 

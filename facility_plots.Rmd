@@ -3,12 +3,12 @@ title: "ICE Detention Data FY21"
 author: Nathan Craig
 date: 15 Apr 2021
 output:
-  html_notebook:
-    toc: true
   html_document:
     df_print: paged
     toc: true
     keep_md: yes
+  html_notebook:
+    toc: true
 ---
 # Introduction
 This document represents exploratory data analysis of ICE's Fiscal Year End Detention Reports. Currently, I am focusing on the FY21 dataset.
@@ -134,15 +134,15 @@ facilities %>%
   arrange(desc(`Guaranteed Minimum`))
 ```
 
-## Estimated number of empty beds
+## Estimated number of "Ghost Beds"
 ```{r}
 facilities %>% 
   as_tibble() %>% 
   select(c(Name, `Guaranteed Minimum`, `Total Detained`, `Percent No Threat`)) %>% 
   filter(`Guaranteed Minimum` >0) %>% 
-  mutate(`Estimated Empty Beds` = `Guaranteed Minimum` - `Total Detained`) %>% 
-  select(c(Name, `Estimated Empty Beds`)) %>% 
-  arrange(desc(`Estimated Empty Beds`))
+  mutate(`Estimated Ghost Beds` = `Guaranteed Minimum` - `Total Detained`) %>% 
+  select(c(Name, `Estimated Ghost Beds`)) %>% 
+  arrange(desc(`Estimated Ghost Beds`))
 ```
 
 ```{r crop spatial features}
