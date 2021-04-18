@@ -6,6 +6,7 @@ output:
   html_document:
     df_print: paged
     toc: true
+    toc_float: true
     number_sections: true
     keep_md: yes
   html_notebook:
@@ -25,12 +26,20 @@ library(tidyverse)
 library(summarytools)
 st_options(plain.ascii = FALSE,
            footnote = NA,
-           subtitle.emphasis = FALSE)
+           subtitle.emphasis = FALSE,
+           round.digits = 2)
 library(knitr)
+# knitr option that forces rounding
+options(digits=3)
 opts_chunk$set(results = 'asis',
                comment = NA,
                prompt = FALSE,
                cache = FALSE)
+# knitr hook to put commas in the thousands place
+# for inline numbers based on variables.
+knit_hooks$set(inline = function(x) {
+  prettyNum(x, big.mark=",")
+})
 ```
 
 ## Load Data
@@ -86,7 +95,7 @@ facilities$`Guaranteed Minimum` <- as.numeric(facilities$`Guaranteed Minimum`)
 
 # Summary Statistics
 
-Calculate detention totals.
+Calculate detention totals based on ICE's reported data.
 
 ```{r}
 facilities <- facilities %>% 
@@ -111,10 +120,67 @@ facilities <- facilities %>%
 
 ```
 
+List summary values
+
 ```{r message=FALSE, warning=FALSE}
 facilities %>% 
   select(c(-`Accuracy Score`, -Longitude, -Latitude, -Zip, -`Zip Geocoded`)) %>% 
   descr(transpose = TRUE, stats = c("mean", "sd", "min", "med", "max"), headings = FALSE)
+```
+
+# Facility Types
+
+```{r, results='hide'}
+# convert character vector to factor vector
+facilities$`Type Detailed` <- as.factor(facilities$`Type Detailed`)
+
+# confirm the type is correct
+class(facilities$`Type Detailed`)
+# table(facilities$`Type Detailed`)
+
+```
+
+```{r}
+facilities %>% 
+  as_tibble() %>% 
+  count(`Type Detailed`)
+```
+
+```{r}
+facility_types <- facilities %>% 
+  as_tibble() %>% 
+  count(`Type Detailed`) %>% 
+  mutate(`Percent Total` = prop.table(n)*100) %>% 
+  mutate_at(3, funs(round(.,2)))
+facility_types %>% 
+  arrange(`Percent Total`)
+```
+
+
+```{r}
+ggplot(facilities, aes(y = fct_infreq(`Type Detailed`)))+
+  geom_bar(stat = 'count')+
+  ylab("Facility Type Detailed")+
+  xlab("Count")+
+  labs(
+    title = "ICE Detention Center Facility Type",
+    caption = "Data source: https://www.ice.gov/detain/detention-management/"
+  )
+
+```
+
+```{r}
+ggplot()+
+  geom_sf(data=states)+
+  geom_sf(data=facilities, aes(color = `Type Detailed`), size = 2)+
+  scale_shape_discrete(solid = FALSE)+
+  coord_sf(xlim = c(-125,-64), ylim = c(16.5, 49.5), expand = TRUE)+
+  scale_x_continuous(breaks = c(-120, -100, -80))+
+  labs(
+    title = "ICE Detention Facility Type",
+    caption = "Data source: https://www.ice.gov/detain/detention-management/"
+    )+
+  facet_wrap(~`Type Detailed`, ncol =3)
 ```
 
 ## Guaranteed Minimums
@@ -122,7 +188,6 @@ facilities %>%
 ```{r Sum of Guaranteed Minimum Beds, include=FALSE}
 guaranteed_min <- sum(facilities$`Guaranteed Minimum`, na.rm = TRUE)
 ```
-
 
 Of the 142 facilities listed in the FY21 ICE Detention Year End Report 35% (n = 50) have Guaranteed Minimums as part of their contracts. Based on data reported by ICE, there are a total of `r format(guaranteed_min, scientific=FALSE)` guaranteed beds in FY21. The table below lists those facilities in descending order based on the Guaranteed Minimum number of beds stipulated in the contract.
 
@@ -134,8 +199,22 @@ facilities %>%
   arrange(desc(`Guaranteed Minimum`))
 ```
 
+
+```{r}
+
+aggregate(x = facilities$`Guaranteed Minimum`,
+          by = list(facilities$`Type Detailed`),
+          FUN = sum, na.rm=TRUE) %>% 
+  rename(`Type Detailed` = Group.1) %>% 
+  rename(`Total Guaranteed Minimum` = x)
+```
+
+
+
 ## Estimated number of "Ghost Beds"
-Selman and Leighton [-@selman2010, 114] explain that compensation for private prisons is fraught with guarantees, including the payment of a minimum number of inmates which over time became standard language in many contracts. Selman and Leighton refer to the payment of nonexistent inmate beds through guaranteed minimums as "ghost inmates." Immigration detention is modeled on corrections and is effectively punishment imposed  through a program of prevention through deterrence. However, individuals incarcerated by ICE are held in what is supposed to be non-punitive civil custody. Therefore, rather than referring to empty guaranteed beds that are paid for through contractual obligations as "ghost inmates" I refer to these in the immigration context as "ghost beds."
+
+Selman and Leighton [-@selman2010, 114] explain that compensation for private prisons is fraught with guarantees, including the payment of a minimum number of inmates which over time became standard language in many contracts. Selman and Leighton refer to the payment of nonexistent inmate beds through guaranteed minimums as "ghost inmates." Immigration detention is modeled on corrections and is effectively punishment imposed through a program of prevention through deterrence. However, individuals incarcerated by ICE are held in what is supposed to be non-punitive civil custody. Therefore, rather than referring to empty guaranteed beds that are paid for through contractual obligations as "ghost inmates" I refer to these in the immigration context as "ghost beds."
+
 ```{r}
 ghost_beds <- facilities %>% 
   select(c(Name, `Guaranteed Minimum`, `Total Detained`, `Percent No Threat`)) %>% 
@@ -149,14 +228,12 @@ ghost_beds <- facilities %>%
 ghost_bed_sum <- sum(ghost_beds$`Estimated Ghost Beds`)
 ```
 
-
-Based on ICE data, for FY21 there are a total of `r format(ghost_bed_sum, scientific=FALSE)` ghost beds. Assuming an average cost of $100 per day per bed, this comes out to \$`r format(ghost_bed_sum*100, scientific=FALSE)` per day paid for empty detention beds.
+Based on ICE data, for FY21 there are a total of `r format(ghost_bed_sum, scientific=FALSE)` ghost beds. Assuming an average cost of \$100 per day per bed, this comes out to \$`r format(ghost_bed_sum*100, scientific=FALSE)` per day paid for empty detention beds.
 
 ```{r}
 as_tibble(ghost_beds) %>% 
   select(-geometry)
 ```
-
 
 ```{r}
 ggplot()+
@@ -187,7 +264,6 @@ ggplot()+
   geom_histogram(aes(`Percent No Threat`), bins = 20)
 ```
 
-
 ```{r map estimated percent no threat}
 ggplot()+
   geom_sf(data=states)+
@@ -200,8 +276,6 @@ ggplot()+
     color = "Total\nDetained",
     size = "Estimated\n% No Threat")
 ```
-
-
 
 ## Mandatory Detention
 
