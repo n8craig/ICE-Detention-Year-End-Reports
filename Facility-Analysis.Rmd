@@ -122,11 +122,13 @@ facilities %>%
 
 The table below lists ranked by the total detained population and the map following plots all facilities illustrating the total detained population by the size of the point. Once can see that the facilities with the largest detained populations are located along the southern border with large concentrations in southern California, West Texas, South Texas, Louisiana, South Georgia, and South Florida. Of the facilities with the most number of detained persons, 9 of the 10 are private (either CDF or IGSA). In fact, 18 of the 20 facilities with the largest total detained population are private.
 
-```{r}
+```{r Facilities by Total Detained, echo=FALSE}
+# Facilities Ranked by Total Detained
 facilities %>% 
   arrange(desc(`Total Detained`)) %>% 
   select(Name, State, `Type Detailed`, `Total Detained`) %>% 
   mutate(`Total Detained` = round(`Total Detained`,0))
+  
 ```
 
 ```{r facilities by total detained, echo=FALSE}

@@ -7,10 +7,5 @@ hostUrl: rpubs.com
 appId: https://api.rpubs.com/api/v1/document/756748/a458e8d458ed40c58daa70f249e9e582
 bundleId: https://api.rpubs.com/api/v1/document/756748/a458e8d458ed40c58daa70f249e9e582
 url: http://rpubs.com/ncraig/756748
-<<<<<<< HEAD
-when: 1618796666.27461
-lastSyncTime: 1618796666.27461
-=======
-when: 1618793147.28
-lastSyncTime: 1618793147.28
->>>>>>> d35fce21a7dda1872ae79183e76675f698235797
+when: 1618796889.90216
+lastSyncTime: 1618796889.90216
