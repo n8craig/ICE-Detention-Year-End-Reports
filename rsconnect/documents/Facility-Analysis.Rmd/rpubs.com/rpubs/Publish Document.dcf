@@ -1,0 +1,11 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/756748/a458e8d458ed40c58daa70f249e9e582
+bundleId: https://api.rpubs.com/api/v1/document/756748/a458e8d458ed40c58daa70f249e9e582
+url: http://rpubs.com/ncraig/756748
+when: 1618793147.28
+lastSyncTime: 1618793147.28

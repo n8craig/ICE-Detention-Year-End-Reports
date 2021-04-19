@@ -1,0 +1,51 @@
+---
+title: "Facility Plot Tests"
+output: html_notebook
+---
+
+```{r load libraries, message=FALSE, warning=FALSE, results='hide'}
+library(sf)
+library(ggplot2)
+library(readxl)
+library(tidyverse)
+library(summarytools)
+st_options(plain.ascii = FALSE,
+           footnote = NA,
+           subtitle.emphasis = FALSE,
+           round.digits = 2)
+library(knitr)
+# knitr option that forces rounding
+options(digits=3)
+opts_chunk$set(results = 'asis',
+               comment = NA,
+               prompt = FALSE,
+               cache = FALSE)
+# knitr hook to put commas in the thousands place
+# for inline numbers based on variables.
+knit_hooks$set(inline = function(x) {
+  prettyNum(x, big.mark=",")
+})
+```
+
+
+```{r read spatial data, message=FALSE, warning=FALSE, results='hide'}
+# Load Datasets
+
+facilities <- read_excel("data/facilities geocoded.xlsx")
+states <- st_read("./map_data/cb_2018_us_state_500k.shp")
+```
+
+Note Here that when plotting points in a map setting, it is possible to just read the Excel file rather than convert to a shapefile. This could make data editing down the line easier because columns can be added right in Excel if need be.
+```{r facet map of facilities by type}
+ggplot()+
+  geom_sf(data=states)+
+  geom_point(data=facilities, aes(x=Longitude, y=Latitude, color = `Type Detailed`), size = 2)+
+  scale_shape_discrete(solid = FALSE)+
+  coord_sf(xlim = c(-125,-64), ylim = c(16.5, 49.5), expand = TRUE)+
+  scale_x_continuous(breaks = c(-120, -100, -80))+
+  labs(
+    title = "ICE Detention Facility Type",
+    caption = "Data source: https://www.ice.gov/detain/detention-management/"
+    )+
+  facet_wrap(~`Type Detailed`, ncol =3)
+```
