@@ -1,0 +1,388 @@
+---
+title: "ICE Detention Data FY21"
+author: Nathan Craig
+date: 15 Apr 2021
+output:
+  html_document:
+    df_print: paged
+    toc: true
+    toc_float: true
+    number_sections: true
+    keep_md: yes
+  html_notebook:
+    toc: true
+bibliography: references.bib
+---
+
+# Introduction {#introduction}
+
+This document represents exploratory data analysis of ICE's Fiscal FY21 Year End Detention Report. I downloaded the data on 15 April 2021, so the report should represent the first 6 months of FY21 (see below). Analysis was performed in R Studio, written in Rmarkdown, and all code is supplied in the [Appendix](#appendix-a-code-used-in-document).
+
+```{r load libraries, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+# Load libraries
+library(sf)
+library(ggplot2)
+library(readxl)
+library(tidyverse)
+library(summarytools)
+st_options(plain.ascii = FALSE,
+           footnote = NA,
+           subtitle.emphasis = FALSE,
+           round.digits = 2)
+library(knitr)
+# knitr option that forces rounding
+options(digits=3)
+opts_chunk$set(results = 'asis',
+               comment = NA,
+               prompt = FALSE,
+               cache = FALSE)
+# knitr hook to put commas in the thousands place
+# for inline numbers based on variables.
+knit_hooks$set(inline = function(x) {
+  prettyNum(x, big.mark=",")
+})
+
+# Turn off scientific notation
+options(digits=5, scipen=15) 
+
+```
+
+## Data
+
+The FY21 Year End Report was downloaded from the [ICE Detention Management](https://www.ice.gov/detain/detention-management) webpage on 15 Apr 2021. FY21 ends on 30 September 2021, so the data in the table represent the first half of FY21. The data are likely to change over the course of the last half of FY21.
+
+For mapping purposes, facility coordinates were based on facility address and established using [Geocodio](https://www.geocod.io/). The coordinates were appended to the original table in Excel. The geocoded file is available in the [data directory](https://github.com/n8craig/IDE-Detention-Year-End-Reports/tree/main/data) of the project GitHub repository.
+
+```{r read spatial data, message=FALSE, warning=FALSE, include=FALSE, results='hide'}
+# Load Datasets
+facilities <- read_excel("data/facilities geocoded.xlsx")
+states <- st_read("./map_data/cb_2018_us_state_500k.shp")
+
+```
+
+The map below plots all 142 ICE detention facilities listed in the FY21 year end spreadsheet. Note there are five facilities located outside of the continental US. These are from West to East:
+
+-   Honolulu Federal Detention Center, HI
+-   Hiland Mountain Correctional Center, AK
+-   Guaynabo MDC PR
+-   Department Of Corrections GU
+-   Saipan Department Of Corrections MP
+
+```{r Map of all facilities, echo=FALSE}
+# Map of all facilities
+ggplot()+
+  geom_sf(data=states)+
+  geom_point(data=facilities,
+             aes(x=Longitude, y=Latitude), color = "Red", size = 1)+
+    coord_sf(xlim = c(-165,150), ylim = c(10,72), expand = FALSE)+
+  labs(
+    title = "ICE Detention Facilities",
+    caption = "Data source: https://www.ice.gov/detain/detention-management/"
+    )
+
+```
+
+# Summary Statistics
+
+The table below reports summary statistics of the numeric values provided in the ICE FY21 Year End Detention Report Table. Of the 142 facilities reported the average total detained is 109 persons (SD = 138.54, Median = 54.23). On 15 April 2021, the day the data were downloaded, ICE [reported](https://web.archive.org/web/20210415204059/https://www.ice.gov/coronavirus#detStat) there were 15,344 persons in detention. An average detained population of 109 x 142 facilities results in 15478 which is very similar to the total detained population reported by ICE.
+
+```{r calculate detention totals, include=FALSE}
+# Adding new columns
+facilities <- facilities %>% 
+  mutate(`Total Detained`=
+           `Female Crim` +
+           `Female Non-Crim` +
+           `Male Crim` +
+           `Male Non-Crim`) %>% 
+  mutate(`Total Males Detained` =
+           `Male Crim` +
+           `Male Non-Crim`) %>% 
+  mutate(`Total Females Detained` =
+           `Female Crim` +
+           `Female Non-Crim`) %>% 
+  mutate(`Percent No Threat` =
+            (`No ICE Threat Level` /
+           `Total Detained`)*100) %>% 
+  relocate(c(`Total Females Detained`,
+             `Total Males Detained`,
+             `Total Detained`,
+             `Percent No Threat`), .after = `Guaranteed Minimum`)
+
+```
+
+```{r summary values, echo=FALSE, message=FALSE, warning=FALSE}
+# Creating a variable to use in the text
+facilities %>% 
+  select(c(-`Accuracy Score`, -Longitude, -Latitude, -Zip, -`Zip Geocoded`)) %>% 
+  descr(stats = c("mean", "sd", "min", "med", "max"),
+        transpose = TRUE,
+        headings = FALSE) %>% 
+  kable(digits = 2, scientific = FALSE)
+```
+
+The table below lists ranked by the total detained population and the map following plots all facilities illustrating the total detained population by the size of the point. Once can see that the facilities with the largest detained populations are located along the southern border with large concentrations in southern California, West Texas, South Texas, Louisiana, South Georgia, and South Florida. Of the facilities with the most number of detained persons, 9 of the 10 are private (either CDF or IGSA). In fact, 18 of the 20 facilities with the largest total detained population are private.
+
+```{r}
+facilities %>% 
+  arrange(desc(`Total Detained`)) %>% 
+  select(Name, State, `Type Detailed`, `Total Detained`) %>% 
+  mutate(`Total Detained` = round(`Total Detained`,0))
+```
+
+```{r facilities by total detained, echo=FALSE}
+# facilities by total detained
+ggplot()+
+  geom_sf(data=states)+
+  geom_point(data=facilities,
+             aes(x=Longitude, y=Latitude,
+                 size = `Total Detained`))+
+  scale_shape_discrete(solid = FALSE)+
+  coord_sf(xlim = c(-125,-64), ylim = c(16.5, 49.5), expand = TRUE)+
+  scale_x_continuous(breaks = c(-120, -100, -80))+
+  labs(
+    title = "ICE Detention Facility Showing Total Detained Population",
+    caption = "Data source: https://www.ice.gov/detain/detention-management/"
+    )
+
+```
+
+# Facility Types
+
+The FY21 table lists 6 kinds of facilities. The table below shows the number and percent total of of each facility type. The following bar chart graphically represents the breakdown by facility type. IGSA's constitute more than half of the facilities.
+
+```{r facility type as factor, include=FALSE, results='hide'}
+# convert character vector to factor vector
+facilities$`Type Detailed` <- as.factor(facilities$`Type Detailed`)
+
+# confirm the type is correct
+class(facilities$`Type Detailed`)
+
+```
+
+```{r facility count and percent total by type, echo=FALSE, message=FALSE, warning=FALSE}
+# Facility count and percent total by facility type.
+facility_types <- facilities %>% 
+  count(`Type Detailed`) %>%
+  mutate(`Percent Total` = prop.table(n)*100) %>% 
+  mutate(`Percent Total` = round(`Percent Total`,2))
+  
+# Sort by percent total
+facility_types %>% 
+  arrange(`Percent Total`)
+
+```
+
+```{r bar chart of facility count by type, echo=FALSE}
+# Bar Chart of Facility Count by Type
+ggplot(facilities, aes(y = fct_infreq(`Type Detailed`)))+
+  geom_bar(stat = 'count')+
+  ylab("Facility Type Detailed")+
+  xlab("Count")+
+  labs(
+    title = "ICE Detention Center Facility Count by Facility Type",
+    caption = "Data source: https://www.ice.gov/detain/detention-management/"
+  )
+
+```
+
+The facet map below shows the location of facilities by type. One can see that CDF, IGSA, "Other", and SPC facilities are concentrated along the southern border. There is a large concentration of USMS IGA's located in the Northeast, but there is also a sizeable concentration of these facilities along the southern border, just like the other facility types.
+
+```{r facet map of facilities by type, echo=FALSE}
+# Facet map of Facilities by Type
+ggplot()+
+  geom_sf(data=states)+
+  geom_point(data=facilities,
+             aes(x=Longitude, y=Latitude,
+                 color = `Type Detailed`), size = 2)+
+  scale_shape_discrete(solid = FALSE)+
+  coord_sf(xlim = c(-125,-64), ylim = c(16.5, 49.5), expand = TRUE)+
+  scale_x_continuous(breaks = c(-120, -100, -80))+
+  labs(
+    title = "ICE Detention Facility Type",
+    caption = "Data source: https://www.ice.gov/detain/detention-management/"
+    )+
+  facet_wrap(~`Type Detailed`, ncol =3)
+
+```
+
+# Guaranteed Minimums
+
+```{r Sum of Guaranteed Minimum Beds, include=FALSE}
+# Variable of sum of guaranteed minimum beds, for use in text.
+guaranteed_min <- sum(facilities$`Guaranteed Minimum`, na.rm = TRUE)
+
+```
+
+Of the 142 facilities listed in the FY21 ICE Detention Year End Report 35% (n = 50) have Guaranteed Minimums as part of their contracts. Based on data reported by ICE, there are a total of `r format(guaranteed_min, scientific=FALSE)` guaranteed beds in FY21. The table below lists those facilities in descending order based on the Guaranteed Minimum number of beds stipulated in the contract.
+
+```{r Guaranteed Minimums by Facility, echo=FALSE}
+# Guaranteed Minimums by Facility
+facilities_guaranteed_min <- 
+facilities %>% 
+  as_tibble() %>% 
+  select(c(Name, `Type Detailed`, `Guaranteed Minimum`,
+           `Total Detained`, `Mandatory`, 
+           `Percent No Threat`)) %>% 
+  filter(`Guaranteed Minimum` >0) %>% 
+  arrange(desc(`Guaranteed Minimum`))
+facilities_guaranteed_min %>% 
+  select(-`Type Detailed`)
+
+# Plot of Guaranteed Minimums
+facilities_guaranteed_min %>% 
+  ggplot()+
+  geom_density(aes(x=`Guaranteed Minimum`, color=`Type Detailed`))
+
+```
+
+```{r Count of Facilities by Type, echo=FALSE}
+# Facility count and percent total by facility type.
+facility_type_count <- 
+facilities %>% 
+  count(`Type Detailed`) %>%
+  mutate(`Prop Total` = prop.table(n)) %>% 
+  mutate(`Prop Total` = round(`Prop Total`, 2)) %>% 
+  arrange(`Prop Total`)
+
+# Count of Facilities by Type that have Guaranteed Minimums
+facilities_guaranteed_count <- 
+facilities %>% 
+  filter(`Guaranteed Minimum` >0) %>% 
+  count(`Type Detailed`) %>%
+  rename(`n Guaranteed Min` = n)
+
+# Calculate Guaranteed Minimum by Type using Tidyverse R functions
+facility_guaranteed_total_beds <- 
+facilities %>% 
+  filter(`Guaranteed Minimum`>0) %>% 
+  group_by(`Type Detailed`) %>% 
+  summarise(`Total Guaranteed Min` = sum(`Guaranteed Minimum`))
+
+# Combine Tables
+facility_type_count %>% 
+  left_join(facilities_guaranteed_count) %>% 
+  left_join(facility_guaranteed_total_beds) %>% 
+  mutate(`Guaranteed Min %` = `n Guaranteed Min`/n*100) %>% 
+  relocate(`Total Guaranteed Min`, .after = `Guaranteed Min %`)
+
+# Remove temporary data
+remove(facility_type_count, facilities_guaranteed_count, facility_guaranteed_total_beds)
+
+```
+
+```{r echo=FALSE}
+# Summarizing Guaranteed Minimums
+facilities %>% 
+  group_by(`Type Detailed`) %>% 
+  filter(`Guaranteed Minimum`>0) %>% 
+  summarize(`Guaranteed Minimum`) %>% 
+  descr(transpose = TRUE, stats = "common", headings = FALSE)
+
+```
+
+## Estimated number of "Ghost Beds"
+
+Selman and Leighton [-@selman2010, 114] explain that compensation for private prisons is fraught with guarantees, including the payment of a minimum number of inmates which over time became standard language in many contracts. Selman and Leighton refer to the payment of nonexistent inmate beds through guaranteed minimums as "ghost inmates." Immigration detention is modeled on corrections and is effectively punishment imposed through a program of prevention through deterrence. However, individuals incarcerated by ICE are held in what is supposed to be non-punitive civil custody. Therefore, rather than referring to empty guaranteed beds that are paid for through contractual obligations as "ghost inmates" I refer to these in the immigration context as "ghost beds."
+
+```{r Estimated Ghost Beds, echo=FALSE}
+# Estimating Ghost Beds
+ghost_beds <- facilities %>% 
+  filter(`Guaranteed Minimum` >0) %>% 
+  mutate(`Estimated Ghost Beds` = `Guaranteed Minimum` - `Total Detained`) %>% 
+  arrange(desc(`Estimated Ghost Beds`))
+
+# Mapping Ghost Beds
+ghost_beds %>% 
+    select(c(Name, `Estimated Ghost Beds`, `Guaranteed Minimum`, `Total Detained`, `Percent No Threat`))
+
+```
+
+```{r Sum of Ghost Beds, include=FALSE}
+# Sum of Ghost Beds
+ghost_bed_sum <- sum(ghost_beds$`Estimated Ghost Beds`)
+
+```
+
+Based on ICE data, for FY21 there are a total of `r format(ghost_bed_sum, scientific=FALSE)` ghost beds. Assuming an average cost of \$100 per day per bed, this comes out to \$`r format(ghost_bed_sum*100, scientific=FALSE)` per day paid for empty detention beds.
+
+```{r Map of Ghost Beds, echo=FALSE}
+# Map of Ghost Beds
+ggplot()+
+  geom_sf(data=states)+
+  geom_point(data=ghost_beds, aes(x=Longitude, y=Latitude, size=`Estimated Ghost Beds`))+
+  coord_sf(xlim = c(-125,-64), ylim = c(16.5, 49.5), expand = FALSE)+
+    labs(
+    title = "ICE Detention Facilities",
+    subtitle = "Showing Estimated Ghost Beds FY21",
+    caption = "Data source: https://www.ice.gov/detain/detention-management/",
+    size = "Estimated\nGhost Beds")
+
+```
+
+# Threat Level
+
+```{r Table of No Threat by Facility, echo=FALSE}
+# % No Threat
+no_threat <- 
+  facilities %>% 
+  arrange(desc(`Percent No Threat`))
+no_threat %>% 
+    select(c(Name, `Percent No Threat`, `Total Detained`))
+
+```
+
+```{r histogram no threat, echo=FALSE, warning=FALSE}
+# Histogram of No Threat
+no_threat %>% 
+ggplot()+
+  geom_histogram(aes(`Percent No Threat`), bins = 20)
+
+```
+
+```{r map estimated percent no threat, echo=FALSE}
+# Map of Estimated Percent No Threat
+ggplot()+
+  geom_sf(data=states)+
+  geom_point(data=`no_threat`,
+          aes(x=Longitude, y=Latitude,
+              size=`Percent No Threat`, color=`Total Detained`))+
+  coord_sf(xlim = c(-125,-64), ylim = c(16.5, 49.5), expand = FALSE)+
+    labs(
+    title = "ICE Detention Facilities",
+    subtitle = "Showing Estimated Percent No ICE Threat",
+    caption = "Data source: https://www.ice.gov/detain/detention-management/",
+    color = "Total\nDetained",
+    size = "Estimated\n% No Threat")
+
+```
+
+# Mandatory Detention
+
+```{r facility map with mandatory detention and guaranteed minimums, echo=FALSE}
+# Map of Manditory Detention and Guaranteed Minimums
+ggplot()+
+  geom_sf(data=states)+
+  geom_point(data=facilities,
+          aes(x=Longitude, y=Latitude,
+              color = `Guaranteed Minimum`,
+              size = `Mandatory`))+
+  coord_sf(xlim = c(-125,-64), ylim = c(16.5, 49.5), expand = FALSE)+
+  labs(
+    title = "ICE Detention Facilities",
+    subtitle = "Showing Mandatory Detention and Contractual Guaranteed Minimums",
+    caption = "Data source: https://www.ice.gov/detain/detention-management",
+    color ="Guaranteed\nMinimum",
+    size = "Mandatory\nDetention")
+
+```
+
+# References
+
+::: {#refs}
+:::
+
+# Appendix A: Code
+
+```{r ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+
+```

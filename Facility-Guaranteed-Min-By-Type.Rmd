@@ -1,0 +1,110 @@
+---
+title: "ICE Detention Facilities Guaranteed Minimum by Facility Type"
+author: "Nathan Craig"
+output: html_notebook
+---
+# Load Libraries and Data
+
+```{r load libraries, message=FALSE, warning=FALSE, results='hide'}
+library(sf)
+library(ggplot2)
+library(readxl)
+library(tidyverse)
+library(summarytools)
+st_options(plain.ascii = FALSE,
+           footnote = NA,
+           subtitle.emphasis = FALSE,
+           round.digits = 2)
+library(knitr)
+# knitr option that forces rounding
+options(digits=3)
+opts_chunk$set(results = 'asis',
+               comment = NA,
+               prompt = FALSE,
+               cache = FALSE)
+# knitr hook to put commas in the thousands place
+# for inline numbers based on variables.
+knit_hooks$set(inline = function(x) {
+  prettyNum(x, big.mark=",")
+})
+```
+
+```{r read spatial data, message=FALSE, warning=FALSE, results='hide'}
+# Load Datasets
+facilities <- read_excel("data/facilities geocoded.xlsx")
+```
+
+# Summary Statistics
+
+
+
+```{r}
+facilities %>% 
+  group_by(`Type Detailed`) %>% 
+  filter(`Guaranteed Minimum`>0) %>% 
+  summarize(`Guaranteed Minimum`) %>% 
+  descr(transpose = TRUE, stats = "common", headings = FALSE)
+```
+
+# Calculate Total Guaranteed Min by Facility Type
+
+
+```{r Count of Facilities by Type}
+# Facility count and percent total by facility type.
+facility_type_count <- 
+facilities %>% 
+  count(`Type Detailed`) %>%
+  mutate(`Prop Total` = prop.table(n)) %>% 
+  mutate_at(3, funs(round(.,2))) %>% 
+  arrange(`Prop Total`)
+
+# Count of Facilities by Type that have Guaranteed Minimums
+facilities_guaranteed_count <- 
+facilities %>% 
+  filter(`Guaranteed Minimum` >0) %>% 
+  count(`Type Detailed`) %>%
+  rename(`n Guaranteed Min` = n)
+
+# Calculate Guaranteed Minimum by Type using Tidyverse R functions
+facility_guaranteed_total_beds <- 
+facilities %>% 
+  filter(`Guaranteed Minimum`>0) %>% 
+  group_by(`Type Detailed`) %>% 
+  summarise(`Total Guaranteed Min` = sum(`Guaranteed Minimum`))
+
+# Combine Tables
+facility_type_count %>% 
+  left_join(facilities_guaranteed_count) %>% 
+  left_join(facility_guaranteed_total_beds) %>% 
+  mutate(`Guaranteed Min %` = `n Guaranteed Min`/n*100) %>% 
+  relocate(`Total Guaranteed Min`, .after = `Guaranteed Min %`)
+
+# Remove temporary data
+remove(facility_type_count, facilities_guaranteed_count, facility_guaranteed_total_beds)
+```
+
+
+
+
+
+# Not Used
+
+```{r}
+# Count of facilities by type using group_by() and tally()
+facilities %>% 
+  group_by(`Type Detailed`) %>% 
+  tally()
+
+# count is a shorthand for group_by() + tally()
+facilities %>% 
+  count(`Type Detailed`)
+```
+
+```{r}
+# Calculate Guaranteed Minimum by Type using Base R functions
+aggregate(x = facilities$`Guaranteed Minimum`,
+          by = list(facilities$`Type Detailed`),
+          FUN = sum, na.rm=TRUE) %>% 
+  rename(`Type Detailed` = Group.1) %>% 
+  rename(`Total Guaranteed Min` = x)
+```
