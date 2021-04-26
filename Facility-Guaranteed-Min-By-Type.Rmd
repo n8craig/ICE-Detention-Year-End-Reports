@@ -34,54 +34,26 @@ knit_hooks$set(inline = function(x) {
 facilities <- read_excel("data/facilities geocoded.xlsx")
 ```
 
+```{r facility type as factor, results='hide'}
+# convert character vector to factor vector
+facilities$`Type Detailed` <- as.factor(facilities$`Type Detailed`)
+
+# confirm the type is correct
+class(facilities$`Type Detailed`)
+# table(facilities$`Type Detailed`)
+
+```
+
 # Summary Statistics
 
 
 
-```{r}
-facilities %>% 
-  group_by(`Type Detailed`) %>% 
-  filter(`Guaranteed Minimum`>0) %>% 
-  summarize(`Guaranteed Minimum`) %>% 
-  descr(transpose = TRUE, stats = "common", headings = FALSE)
-```
+
 
 # Calculate Total Guaranteed Min by Facility Type
 
 
-```{r Count of Facilities by Type}
-# Facility count and percent total by facility type.
-facility_type_count <- 
-facilities %>% 
-  count(`Type Detailed`) %>%
-  mutate(`Prop Total` = prop.table(n)) %>% 
-  mutate_at(3, funs(round(.,2))) %>% 
-  arrange(`Prop Total`)
 
-# Count of Facilities by Type that have Guaranteed Minimums
-facilities_guaranteed_count <- 
-facilities %>% 
-  filter(`Guaranteed Minimum` >0) %>% 
-  count(`Type Detailed`) %>%
-  rename(`n Guaranteed Min` = n)
-
-# Calculate Guaranteed Minimum by Type using Tidyverse R functions
-facility_guaranteed_total_beds <- 
-facilities %>% 
-  filter(`Guaranteed Minimum`>0) %>% 
-  group_by(`Type Detailed`) %>% 
-  summarise(`Total Guaranteed Min` = sum(`Guaranteed Minimum`))
-
-# Combine Tables
-facility_type_count %>% 
-  left_join(facilities_guaranteed_count) %>% 
-  left_join(facility_guaranteed_total_beds) %>% 
-  mutate(`Guaranteed Min %` = `n Guaranteed Min`/n*100) %>% 
-  relocate(`Total Guaranteed Min`, .after = `Guaranteed Min %`)
-
-# Remove temporary data
-remove(facility_type_count, facilities_guaranteed_count, facility_guaranteed_total_beds)
-```
 
 
 

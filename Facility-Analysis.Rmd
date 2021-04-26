@@ -217,7 +217,7 @@ guaranteed_min <- sum(facilities$`Guaranteed Minimum`, na.rm = TRUE)
 
 Of the 142 facilities listed in the FY21 ICE Detention Year End Report 35% (n = 50) have Guaranteed Minimums as part of their contracts. Based on data reported by ICE, there are a total of `r format(guaranteed_min, scientific=FALSE)` guaranteed beds in FY21. The table below lists those facilities in descending order based on the Guaranteed Minimum number of beds stipulated in the contract.
 
-```{r Guaranteed Minimums by Facility, echo=FALSE}
+```{r Guaranteed Minimums by Facility, echo=FALSE, message=FALSE, warning=FALSE}
 # Guaranteed Minimums by Facility
 facilities_guaranteed_min <- 
 facilities %>% 
